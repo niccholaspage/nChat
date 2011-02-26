@@ -26,7 +26,7 @@ public class nChat extends JavaPlugin {
     @Override
 	public void onDisable() {
 		//Print "Basic Disabled" on the log.
-		System.out.println("Basic Disabled");
+		System.out.println("nChat Disabled");
 		
 	}
     @Override
