@@ -37,11 +37,11 @@ public class nChatPlayerListener extends PlayerListener{
 			  suffix = userSuffix;
 		  }
 		  out = out.replaceAll("\\+name", player.getDisplayName());
-		  out = out.replaceAll("\\+message", message);
 		  out = out.replaceAll("\\+group", group);
 		  out = out.replaceAll("\\+prefix", prefix);
 		  out = out.replaceAll("\\+suffix", suffix);
 		  out = out.replaceAll("&", "¤");
+		  out = out.replaceAll("\\+message", message);
 		  plugin.getServer().broadcastMessage(out);
 		  event.setCancelled(true);
 	  }
