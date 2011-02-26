@@ -72,9 +72,7 @@ public class nChat extends JavaPlugin {
     	// Reading from yml file
     	String messageFormat = _config.getString("nChat.messageformat", "[+prefix+group+suffix&f] +name: +message");
     	String colorcharacter = _config.getString("nChat.colorcharacter", "~");
-		if (colorcharacter.equalsIgnoreCase("+")){
-			colorcharacter = "\\+";
-		}
+		colorcharacter = "\\" + colorcharacter;
     	playerListener.setMessageFormat(messageFormat, colorcharacter);
         }
     private void setupPermissions() {
