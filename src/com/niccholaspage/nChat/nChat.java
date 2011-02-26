@@ -4,13 +4,15 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.util.HashMap;
+
 import org.bukkit.entity.Player;
+import org.bukkit.event.Event;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.PluginManager;
-import org.bukkit.event.Event;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.util.config.Configuration;
+
 import com.nijiko.permissions.PermissionHandler;
 import com.nijikokun.bukkit.Permissions.Permissions;
 
@@ -71,16 +73,16 @@ public class nChat extends JavaPlugin {
     	playerListener.setMessageFormat(messageFormat);
         }
     private void setupPermissions() {
-        Plugin test = this.getServer().getPluginManager().getPlugin("Permissions");
+        Plugin perm = this.getServer().getPluginManager().getPlugin("Permissions");
 
         if (nChat.Permissions == null) {
-            if (test != null) {
-                nChat.Permissions = ((Permissions)test).getHandler();
+            if (perm != null) {
+                nChat.Permissions = ((Permissions)perm).getHandler();
             } else {
             	System.out.println("Permissions system not detected, disabling plugin.");
-            	this.getServer().getPluginManager().disablePlugin(this);
+            	this.getPluginLoader().disablePlugin(this);
             }
-        }
+    }
     }
 	//Used when debugging
 	  public boolean isDebugging(final Player player) {

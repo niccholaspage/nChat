@@ -26,8 +26,8 @@ public class nChatPlayerListener extends PlayerListener{
 		  }
 		  String out = messageFormat;
 		  String group = nChat.Permissions.getGroup(player.getName());
-		  String prefix = nChat.Permissions.getGroupPrefix(nChat.Permissions.getGroup(player.getName()));
-		  String suffix = nChat.Permissions.getGroupSuffix(nChat.Permissions.getGroup(player.getName()));
+		  String prefix = nChat.Permissions.getGroupPrefix(group);
+		  String suffix = nChat.Permissions.getGroupSuffix(group);
 		  String userPrefix = nChat.Permissions.getPermissionString(player.getName(), "prefix");
 		  String userSuffix = nChat.Permissions.getPermissionString(player.getName(), "suffix");
 		  if (userPrefix != null){
@@ -36,6 +36,8 @@ public class nChatPlayerListener extends PlayerListener{
 		  if (userSuffix != null){
 			  suffix = userSuffix;
 		  }
+		  if (prefix == null) prefix = "";
+		  if (suffix == null) suffix = "";
 		  out = out.replaceAll("\\+name", player.getDisplayName());
 		  out = out.replaceAll("\\+group", group);
 		  out = out.replaceAll("\\+prefix", prefix);
