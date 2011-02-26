@@ -62,6 +62,7 @@ public class nChat extends JavaPlugin {
     	    	    BufferedWriter out = new BufferedWriter(fstream);
     	    	    out.write("nChat:\n");
     	    	    out.write("    messageformat: '[+prefix+group+suffix&f] +name: +message'\n");
+    	    	    out.write("    colorcharacter: '~'");
     	    	    //Close the output stream
     	    	    out.close();
     	    	    }catch (Exception e){//Catch exception if any
@@ -70,7 +71,11 @@ public class nChat extends JavaPlugin {
     	}
     	// Reading from yml file
     	String messageFormat = _config.getString("nChat.messageformat", "[+prefix+group+suffix&f] +name: +message");
-    	playerListener.setMessageFormat(messageFormat);
+    	String colorcharacter = _config.getString("nChat.colorcharacter", "~");
+		if (colorcharacter.equalsIgnoreCase("+")){
+			colorcharacter = "\\+";
+		}
+    	playerListener.setMessageFormat(messageFormat, colorcharacter);
         }
     private void setupPermissions() {
         Plugin perm = this.getServer().getPluginManager().getPlugin("Permissions");

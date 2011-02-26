@@ -1,8 +1,4 @@
 package com.niccholaspage.nChat;
-
-
-
-
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerChatEvent;
 import org.bukkit.event.player.PlayerListener;
@@ -10,11 +6,13 @@ import org.bukkit.event.player.PlayerListener;
 public class nChatPlayerListener extends PlayerListener{
 	 public static nChat plugin;
 	 static String messageFormat;
+	 static String colorcharacter;
 	  public nChatPlayerListener(nChat instance) {
 	        plugin = instance;
 	    }
-	  public void setMessageFormat(String mf){
+	  public void setMessageFormat(String mf, String c){
 		  messageFormat = mf;
+		  colorcharacter = c;
 	  }
 	  public void onPlayerChat(PlayerChatEvent event) {
 		  //Make the message a string.
@@ -44,7 +42,10 @@ public class nChatPlayerListener extends PlayerListener{
 		  out = out.replaceAll("\\+suffix", suffix);
 		  out = out.replaceAll("&", "¤");
 		  out = out.replaceAll("\\+message", message);
-		  plugin.getServer().broadcastMessage(out);
+			if ((nChat.Permissions.has(player, "nChat.colors")) || (nChat.Permissions.has(player, "nChat.colours"))) {
+			    out = out.replaceAll(colorcharacter, "¤");
+			}
+			plugin.getServer().broadcastMessage(out);
 		  event.setCancelled(true);
 	  }
 }
