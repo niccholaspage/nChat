@@ -23,17 +23,14 @@ public class nChatPlayerListener extends PlayerListener{
 			  return;
 		  }
 		  String out = messageFormat;
-		  String group = nChat.Permissions.getGroup(player.getName());
-		  String prefix = nChat.Permissions.getGroupPrefix(group);
-		  String suffix = nChat.Permissions.getGroupSuffix(group);
-		  String userPrefix = nChat.Permissions.getPermissionString(player.getName(), "prefix");
-		  String userSuffix = nChat.Permissions.getPermissionString(player.getName(), "suffix");
-		  if (userPrefix != null){
-			  prefix = userPrefix;
-		  }
-		  if (userSuffix != null){
-			  suffix = userSuffix;
-		  }
+		  String world = player.getWorld().getName();
+		  String group = nChat.Permissions.getGroup(world, player.getName());
+		  String prefix = nChat.Permissions.getGroupPrefix(world, group);
+		  String suffix = nChat.Permissions.getGroupSuffix(world, group);
+		  String userPrefix = nChat.Permissions.getPermissionString(world, player.getName(), "prefix");
+		  String userSuffix = nChat.Permissions.getPermissionString(world, player.getName(), "suffix");
+		  if (userPrefix != null) prefix = userPrefix;
+		  if (userSuffix != null) suffix = userSuffix;
 		  if (prefix == null) prefix = "";
 		  if (suffix == null) suffix = "";
 		  out = out.replaceAll("\\+name", player.getDisplayName());
