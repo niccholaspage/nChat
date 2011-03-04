@@ -37,6 +37,7 @@ public class nChatPlayerListener extends PlayerListener{
 		  out = out.replaceAll("\\+group", group);
 		  out = out.replaceAll("\\+prefix", prefix);
 		  out = out.replaceAll("\\+suffix", suffix);
+		  out = out.replaceAll("\\+world", world);
 		  out = out.replaceAll("&", "¤");
 		  out = out.replace("+message", message);
 			if ((nChat.Permissions.has(player, "nChat.colors")) || (nChat.Permissions.has(player, "nChat.colours"))) {
