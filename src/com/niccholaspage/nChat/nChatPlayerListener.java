@@ -41,7 +41,7 @@ public class nChatPlayerListener extends PlayerListener{
 		  out = out.replace("&", "¤");
 		  out = out.replace("+message", message);
 			if ((nChat.Permissions.has(player, "nChat.colors")) || (nChat.Permissions.has(player, "nChat.colours"))) {
-			    out = out.replaceAll(colorcharacter, "¤");
+			    out = out.replace(colorcharacter, "¤");
 			}
 			event.setFormat(out);
 	  }
