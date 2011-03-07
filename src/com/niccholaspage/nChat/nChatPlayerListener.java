@@ -33,18 +33,19 @@ public class nChatPlayerListener extends PlayerListener{
 		  if (userSuffix != null) suffix = userSuffix;
 		  if (prefix == null) prefix = "";
 		  if (suffix == null) suffix = "";
-		  out = out.replaceAll("\\+name", player.getDisplayName());
-		  out = out.replaceAll("\\+group", group);
-		  out = out.replaceAll("\\+prefix", prefix);
-		  out = out.replaceAll("\\+suffix", suffix);
-		  out = out.replaceAll("\\+world", world);
-		  out = out.replaceAll("&", "¤");
+		  out = out.replace("+name", player.getDisplayName());
+		  out = out.replace("+group", group);
+		  out = out.replace("+prefix", prefix);
+		  out = out.replace("+suffix", suffix);
+		  out = out.replace("+world", world);
+		  out = out.replace("&", "¤");
 		  out = out.replace("+message", message);
 			if ((nChat.Permissions.has(player, "nChat.colors")) || (nChat.Permissions.has(player, "nChat.colours"))) {
 			    out = out.replaceAll(colorcharacter, "¤");
 			}
-			System.out.println(out);
-			plugin.getServer().broadcastMessage(out);
-		  event.setCancelled(true);
+			event.setFormat(out);
+			//System.out.println(out);
+			//plugin.getServer().broadcastMessage(out);
+		  //event.setCancelled(true);
 	  }
 }
