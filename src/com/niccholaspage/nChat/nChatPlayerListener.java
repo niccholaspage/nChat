@@ -44,8 +44,5 @@ public class nChatPlayerListener extends PlayerListener{
 			    out = out.replaceAll(colorcharacter, "¤");
 			}
 			event.setFormat(out);
-			//System.out.println(out);
-			//plugin.getServer().broadcastMessage(out);
-		  //event.setCancelled(true);
 	  }
 }
