@@ -3,9 +3,6 @@ package com.niccholaspage.nChat;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
-import java.util.HashMap;
-
-import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginDescriptionFile;
@@ -19,10 +16,6 @@ import com.nijikokun.bukkit.Permissions.Permissions;
 public class nChat extends JavaPlugin {
 	//Links the BasicPlayerListener
 	private final nChatPlayerListener playerListener = new nChatPlayerListener(this);
-	//Links the BasicBlockListener
-    //private final BasicBlockListener blockListener = new BasicBlockListener(this);
-    //Create the hashmap debugees
-    private final HashMap<Player, Boolean> debugees = new HashMap<Player, Boolean>();
     //Permissions Handler
     public static PermissionHandler Permissions;
     @Override
@@ -66,7 +59,7 @@ public class nChat extends JavaPlugin {
     	    	    //Close the output stream
     	    	    out.close();
     	    	    }catch (Exception e){//Catch exception if any
-    	    	      System.out.println("nSpleef could not write the default config file.");
+    	    	      System.out.println("nChat could not write the default config file.");
     	    	    }
     	}
     	// Reading from yml file
@@ -81,21 +74,9 @@ public class nChat extends JavaPlugin {
             if (perm != null) {
                 nChat.Permissions = ((Permissions)perm).getHandler();
             } else {
-            	System.out.println("Permissions system not detected, disabling plugin.");
-            	this.getPluginLoader().disablePlugin(this);
+            	System.out.println("[nChat] Permissions not detected, disabling nChat.");
+            	getPluginLoader().disablePlugin(this);
             }
     }
     }
-	//Used when debugging
-	  public boolean isDebugging(final Player player) {
-	        if (debugees.containsKey(player)) {
-	            return debugees.get(player);
-	        } else {
-	            return false;
-	        }
-	    }
-
-	    public void setDebugging(final Player player, final boolean value) {
-	        debugees.put(player, value);
-	    }
 }
