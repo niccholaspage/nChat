@@ -15,32 +15,25 @@ public class nChatPlayerListener extends PlayerListener{
 		  colorcharacter = c;
 	  }
 	  public void onPlayerChat(PlayerChatEvent event) {
-		  //Make the message a string.
-			//Get the player that talked.
 		  Player player = event.getPlayer();
 		  String message = event.getMessage();
-		  if (message.startsWith("/")){
-			  return;
-		  }
+		  if (message.startsWith("/")) return;
 		  String out = messageFormat;
 		  String world = player.getWorld().getName();
-		  String group = nChat.Permissions.getGroup(world, player.getName());
-		  String prefix = nChat.Permissions.getGroupPrefix(world, group);
-		  String suffix = nChat.Permissions.getGroupSuffix(world, group);
-		  String userPrefix = nChat.Permissions.getPermissionString(world, player.getName(), "prefix");
-		  String userSuffix = nChat.Permissions.getPermissionString(world, player.getName(), "suffix");
+		  String group = plugin.Permissions.getGroup(world, player.getName());
+		  String prefix = plugin.Permissions.getGroupPrefix(world, group);
+		  String suffix = plugin.Permissions.getGroupSuffix(world, group);
+		  String userPrefix = plugin.Permissions.getPermissionString(world, player.getName(), "prefix");
+		  String userSuffix = plugin.Permissions.getPermissionString(world, player.getName(), "suffix");
 		  if (userPrefix != null) prefix = userPrefix;
 		  if (userSuffix != null) suffix = userSuffix;
 		  if (prefix == null) prefix = "";
 		  if (suffix == null) suffix = "";
-		  out = out.replace("+name", player.getDisplayName());
-		  out = out.replace("+group", group);
-		  out = out.replace("+prefix", prefix);
-		  out = out.replace("+suffix", suffix);
-		  out = out.replace("+world", world);
-		  out = out.replace("&", "¤");
-		  out = out.replace("+message", message);
-			if ((nChat.Permissions.has(player, "nChat.colors")) || (nChat.Permissions.has(player, "nChat.colours"))) {
+		  String[] old = new String[]{"+name", "+group", "+prefix", "+suffix", "+world", "&", "+message"};
+		  String[] replacements = new String[]{player.getDisplayName(), group, prefix, suffix, world, "¤", message};
+		  out = plugin.replaceSplit(out, old, replacements);
+		  out = out.replaceAll("(&([a-f0-9]))", "\u00A7$2");
+			if ((plugin.Permissions.has(player, "nChat.colors")) || (plugin.Permissions.has(player, "nChat.colours"))) {
 			    out = out.replace(colorcharacter, "¤");
 			}
 			event.setFormat(out);

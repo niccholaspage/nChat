@@ -17,7 +17,7 @@ public class nChat extends JavaPlugin {
 	//Links the BasicPlayerListener
 	private final nChatPlayerListener playerListener = new nChatPlayerListener(this);
     //Permissions Handler
-    public static PermissionHandler Permissions;
+    public PermissionHandler Permissions;
     @Override
 	public void onDisable() {
 		//Print "Basic Disabled" on the log.
@@ -39,7 +39,7 @@ public class nChat extends JavaPlugin {
         System.out.println( pdfFile.getName() + " version " + pdfFile.getVersion() + " is enabled!" );
 		
 	}
-    public void readConfig() {
+    private void readConfig() {
 		File file = new File("plugins/nChat/");
 		if (!(file.exists())){
 			file.mkdir();
@@ -70,13 +70,21 @@ public class nChat extends JavaPlugin {
     private void setupPermissions() {
         Plugin perm = this.getServer().getPluginManager().getPlugin("Permissions");
 
-        if (nChat.Permissions == null) {
+        if (Permissions == null) {
             if (perm != null) {
-                nChat.Permissions = ((Permissions)perm).getHandler();
+                Permissions = ((Permissions)perm).getHandler();
             } else {
             	System.out.println("[nChat] Permissions not detected, disabling nChat.");
             	getPluginLoader().disablePlugin(this);
             }
     }
     }
+
+	public String replaceSplit(String str, String[] search, String[] replace) {
+		if (search.length != replace.length) return "";
+		for (int i = 0; i < search.length; i++){
+			str = str.replace(search[i], replace[i]);
+		}
+		return str;
+	}
 }
