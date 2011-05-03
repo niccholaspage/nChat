@@ -32,10 +32,9 @@ public class nChatPlayerListener extends PlayerListener{
 		  String[] old = new String[]{"+name", "+group", "+prefix", "+suffix", "+world", "&", "+message"};
 		  String[] replacements = new String[]{player.getDisplayName(), group, prefix, suffix, world, "¤", message};
 		  out = plugin.replaceSplit(out, old, replacements);
-		  out = out.replaceAll("(&([a-f0-9]))", "\u00A7$2");
-			if ((plugin.Permissions.has(player, "nChat.colors")) || (plugin.Permissions.has(player, "nChat.colours"))) {
-			    out = out.replace(colorcharacter, "¤");
-			}
+		if ((plugin.Permissions.has(player, "nChat.colors")) || (plugin.Permissions.has(player, "nChat.colours"))) {
+			out = out.replace(colorcharacter, "¤");
+		}
 			event.setFormat(out);
 	  }
 }

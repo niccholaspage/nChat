@@ -14,13 +14,11 @@ import com.nijiko.permissions.PermissionHandler;
 import com.nijikokun.bukkit.Permissions.Permissions;
 
 public class nChat extends JavaPlugin {
-	//Links the BasicPlayerListener
 	private final nChatPlayerListener playerListener = new nChatPlayerListener(this);
     //Permissions Handler
     public PermissionHandler Permissions;
     @Override
 	public void onDisable() {
-		//Print "Basic Disabled" on the log.
 		System.out.println("nChat Disabled");
 		
 	}
@@ -83,7 +81,10 @@ public class nChat extends JavaPlugin {
 	public String replaceSplit(String str, String[] search, String[] replace) {
 		if (search.length != replace.length) return "";
 		for (int i = 0; i < search.length; i++){
-			str = str.replace(search[i], replace[i]);
+			String[] split = search[i].split(",");
+			for (int j = 0; j < split.length; j++){
+				str = str.replace(split[j], replace[i]);
+			}
 		}
 		return str;
 	}
