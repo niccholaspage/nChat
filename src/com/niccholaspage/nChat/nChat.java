@@ -19,6 +19,7 @@ public class nChat extends JavaPlugin {
     public PermissionHandler Permissions;
     //Message Format
     public String messageFormat;
+    //Color character
     public String colorCharacter;
     @Override
 	public void onDisable() {
