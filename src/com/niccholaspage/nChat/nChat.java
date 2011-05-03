@@ -17,6 +17,9 @@ public class nChat extends JavaPlugin {
 	private final nChatPlayerListener playerListener = new nChatPlayerListener(this);
     //Permissions Handler
     public PermissionHandler Permissions;
+    //Message Format
+    public String messageFormat;
+    public String colorCharacter;
     @Override
 	public void onDisable() {
 		System.out.println("nChat Disabled");
@@ -61,9 +64,8 @@ public class nChat extends JavaPlugin {
     	    	    }
     	}
     	// Reading from yml file
-    	String messageFormat = _config.getString("nChat.messageformat", "[+prefix+group+suffix&f] +name: +message");
-    	String colorcharacter = _config.getString("nChat.colorcharacter", "~");
-    	playerListener.setMessageFormat(messageFormat, colorcharacter);
+    	messageFormat = _config.getString("nChat.messageformat", "[+prefix+group+suffix&f] +name: +message");
+    	colorCharacter = _config.getString("nChat.colorcharacter", "~");
         }
     private void setupPermissions() {
         Plugin perm = this.getServer().getPluginManager().getPlugin("Permissions");

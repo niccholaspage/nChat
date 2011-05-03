@@ -5,20 +5,14 @@ import org.bukkit.event.player.PlayerListener;
 
 public class nChatPlayerListener extends PlayerListener{
 	 public static nChat plugin;
-	 static String messageFormat;
-	 static String colorcharacter;
 	  public nChatPlayerListener(nChat instance) {
 	        plugin = instance;
 	    }
-	  public void setMessageFormat(String mf, String c){
-		  messageFormat = mf;
-		  colorcharacter = c;
-	  }
 	  public void onPlayerChat(PlayerChatEvent event) {
 		  Player player = event.getPlayer();
 		  String message = event.getMessage();
 		  if (message.startsWith("/")) return;
-		  String out = messageFormat;
+		  String out = plugin.messageFormat;
 		  String world = player.getWorld().getName();
 		  String group = plugin.Permissions.getGroup(world, player.getName());
 		  String prefix = plugin.Permissions.getGroupPrefix(world, group);
@@ -33,7 +27,7 @@ public class nChatPlayerListener extends PlayerListener{
 		  String[] replacements = new String[]{player.getDisplayName(), group, prefix, suffix, world, "¤", message};
 		  out = plugin.replaceSplit(out, old, replacements);
 		if ((plugin.Permissions.has(player, "nChat.colors")) || (plugin.Permissions.has(player, "nChat.colours"))) {
-			out = out.replace(colorcharacter, "¤");
+			out = out.replace(plugin.colorCharacter, "¤");
 		}
 			event.setFormat(out);
 	  }
