@@ -29,6 +29,7 @@ public class nChatPlayerListener extends PlayerListener{
 		if ((plugin.Permissions.has(player, "nChat.colors")) || (plugin.Permissions.has(player, "nChat.colours"))) {
 			out = out.replace(plugin.colorCharacter, "¤");
 		}
+		out = out.replaceAll("%", "%%");
 		event.setFormat(out);
 	  }
 }
