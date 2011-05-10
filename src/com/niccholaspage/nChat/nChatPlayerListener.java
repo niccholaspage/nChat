@@ -1,4 +1,7 @@
 package com.niccholaspage.nChat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerChatEvent;
 import org.bukkit.event.player.PlayerListener;
@@ -23,8 +26,11 @@ public class nChatPlayerListener extends PlayerListener{
 		  if (userSuffix != null) suffix = userSuffix;
 		  if (prefix == null) prefix = "";
 		  if (suffix == null) suffix = "";
-		  String[] old = new String[]{"+name", "+group", "+prefix", "+suffix", "+world", "&", "+message"};
-		  String[] replacements = new String[]{player.getDisplayName(), group, prefix, suffix, world, "¤", message};
+		  Date now = new Date();
+		  SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
+		  String time = dateFormat.format(now);
+		  String[] old = new String[]{"+name", "+group", "+prefix", "+suffix", "+world", "+timestamp", "&", "+message"};
+		  String[] replacements = new String[]{player.getDisplayName(), group, prefix, suffix, world, time, "¤", message};
 		  out = plugin.replaceSplit(out, old, replacements);
 		if ((plugin.Permissions.has(player, "nChat.colors")) || (plugin.Permissions.has(player, "nChat.colours"))) {
 			out = out.replace(plugin.colorCharacter, "¤");
