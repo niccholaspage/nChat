@@ -27,7 +27,7 @@ public class nChatPlayerListener extends PlayerListener{
 		  if (prefix == null) prefix = "";
 		  if (suffix == null) suffix = "";
 		  Date now = new Date();
-		  SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
+		  SimpleDateFormat dateFormat = new SimpleDateFormat(plugin.timestampFormat);
 		  String time = dateFormat.format(now);
 		  String[] old = new String[]{"+name", "+group", "+prefix", "+suffix", "+world", "+timestamp", "&", "+message"};
 		  String[] replacements = new String[]{player.getDisplayName(), group, prefix, suffix, world, time, "¤", message};

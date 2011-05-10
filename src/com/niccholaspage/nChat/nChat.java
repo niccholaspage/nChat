@@ -21,6 +21,8 @@ public class nChat extends JavaPlugin {
     public String messageFormat;
     //Color character
     public String colorCharacter;
+    //Timestamp format
+    public String timestampFormat;
     @Override
 	public void onDisable() {
 		System.out.println("nChat Disabled");
@@ -58,10 +60,12 @@ public class nChat extends JavaPlugin {
     	writeDefaultNode("nChat", "", config);
     	writeDefaultNode("nChat.messageformat", "[+prefix+group+suffix&f] +name: +message", config);
     	writeDefaultNode("nChat.colorcharacter", "~", config);
+    	writeDefaultNode("nChat.timestampformat", "hh:mm:ss", config);
     	config.save();
     	// Reading from yml file
-    	messageFormat = config.getString("nChat.messageformat", "[+prefix+group+suffix&f] +name: +message");
-    	colorCharacter = config.getString("nChat.colorcharacter", "~");
+    	messageFormat = config.getString("nChat.messageformat");
+    	colorCharacter = config.getString("nChat.colorcharacter");
+    	timestampFormat = config.getString("nChat.timestampformat");
         }
     private void setupPermissions() {
         Plugin perm = this.getServer().getPluginManager().getPlugin("Permissions");
