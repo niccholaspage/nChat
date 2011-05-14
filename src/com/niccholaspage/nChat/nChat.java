@@ -23,6 +23,10 @@ public class nChat extends JavaPlugin {
     public String colorCharacter;
     //Timestamp format
     public String timestampFormat;
+    //Join Message
+    public String joinMessage;
+    //Leave Message
+    public String leaveMessage;
     @Override
 	public void onDisable() {
 		System.out.println("nChat Disabled");
@@ -32,8 +36,10 @@ public class nChat extends JavaPlugin {
 	public void onEnable() {
 		//Create the pluginmanage pm.
 		PluginManager pm = getServer().getPluginManager();
-		//Create PlayerCommand listener
-	    pm.registerEvent(Event.Type.PLAYER_CHAT, this.playerListener, Event.Priority.Normal, this);
+		//Register events (like a boss)
+	    pm.registerEvent(Event.Type.PLAYER_CHAT, playerListener, Event.Priority.Normal, this);
+	    pm.registerEvent(Event.Type.PLAYER_JOIN, playerListener,Event.Priority.Normal, this);
+	    pm.registerEvent(Event.Type.PLAYER_QUIT, playerListener,Event.Priority.Normal, this);
        //Get the infomation from the yml file.
         PluginDescriptionFile pdfFile = this.getDescription();
         //Setup Permissions
@@ -57,15 +63,19 @@ public class nChat extends JavaPlugin {
 			}
     	Configuration config = new Configuration(file);
     	config.load();
-    	writeDefaultNode("nChat", "", config);
-    	writeDefaultNode("nChat.messageformat", "[+prefix+group+suffix&f] +name: +message", config);
-    	writeDefaultNode("nChat.colorcharacter", "~", config);
-    	writeDefaultNode("nChat.timestampformat", "hh:mm:ss", config);
+    	writeNode("nChat", "", config);
+    	writeNode("nChat.messageformat", "[+prefix+group+suffix&f] +name: +message", config);
+    	writeNode("nChat.colorcharacter", "~", config);
+    	writeNode("nChat.timestampformat", "hh:mm:ss", config);
+    	writeNode("nChat.joinmessage", "", config);
+    	writeNode("nChat.leavemessage", "", config);
     	config.save();
     	// Reading from yml file
     	messageFormat = config.getString("nChat.messageformat");
     	colorCharacter = config.getString("nChat.colorcharacter");
     	timestampFormat = config.getString("nChat.timestampformat");
+    	joinMessage = config.getString("nChat.joinmessage");
+    	leaveMessage = config.getString("nChat.leavemessage");
         }
     private void setupPermissions() {
         Plugin perm = this.getServer().getPluginManager().getPlugin("Permissions");
@@ -91,7 +101,7 @@ public class nChat extends JavaPlugin {
 		return str;
 	}
 	
-	private void writeDefaultNode(String node,String value, Configuration config){
+	private void writeNode(String node,Object value, Configuration config){
 		if (config.getProperty(node) == null) config.setProperty(node, value);
 	}
 }
