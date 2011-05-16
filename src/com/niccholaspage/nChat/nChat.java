@@ -50,18 +50,13 @@ public class nChat extends JavaPlugin {
 		
 	}
     private void readConfig() {
-		File folder = new File("plugins/nChat/");
-		if (!(folder.exists())){
-			folder.mkdir();
+		new File("plugins/nChat/").mkdir();
+		try {
+			new File("plugins/nChat/config.yml").createNewFile();
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
-		File file = new File("plugins/nChat/config.yml");
-		if (!file.exists())
-			try {
-				file.createNewFile();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-    	Configuration config = new Configuration(file);
+    	Configuration config = new Configuration(new File("plugins/nChat/config.yml"));
     	config.load();
     	writeNode("nChat", "", config);
     	writeNode("nChat.messageformat", "[+prefix+group+suffix&f] +name: +message", config);
