@@ -27,6 +27,8 @@ public class nChat extends JavaPlugin {
     public String joinMessage;
     //Leave Message
     public String leaveMessage;
+    //Is Permissions 3.0?
+    public boolean permissions30;
     @Override
 	public void onDisable() {
 		System.out.println("nChat Disabled");
@@ -78,6 +80,7 @@ public class nChat extends JavaPlugin {
         if (Permissions == null) {
             if (perm != null) {
                 Permissions = ((Permissions)perm).getHandler();
+                permissions30 = perm.getDescription().getVersion().startsWith("3.0");
             } else {
             	System.out.println("[nChat] Permissions not detected, disabling nChat.");
             	getPluginLoader().disablePlugin(this);

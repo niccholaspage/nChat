@@ -31,17 +31,31 @@ public class nChatPlayerListener extends PlayerListener{
 		 out = out.replaceAll("%", "%%");
 		 event.setQuitMessage(out);
 	 }
-	  public void onPlayerChat(PlayerChatEvent event) {
+	  @SuppressWarnings("deprecation")
+	public void onPlayerChat(PlayerChatEvent event) {
 		  Player player = event.getPlayer();
 		  String message = event.getMessage();
 		  if (message.startsWith("/")) return;
 		  String out = plugin.messageFormat;
 		  String world = player.getWorld().getName();
-		  String group = plugin.Permissions.getGroup(world, player.getName());
-		  String prefix = plugin.Permissions.getGroupPrefix(world, group);
-		  String suffix = plugin.Permissions.getGroupSuffix(world, group);
-		  String userPrefix = plugin.Permissions.getPermissionString(world, player.getName(), "prefix");
-		  String userSuffix = plugin.Permissions.getPermissionString(world, player.getName(), "suffix");
+		  String group;
+		  String prefix;
+		  String suffix;
+		  String userPrefix;
+		  String userSuffix;
+		  if (plugin.permissions30){
+			  group = plugin.Permissions.getPrimaryGroup(world, player.getName());
+			  prefix = plugin.Permissions.getGroupRawPrefix(world, group);
+			  suffix = plugin.Permissions.getGroupRawSuffix(world, group);
+			  userPrefix = plugin.Permissions.getUserPrefix(world, player.getName());
+			  userSuffix = plugin.Permissions.getUserSuffix(world, player.getName());
+		  }else {
+			  group = plugin.Permissions.getGroup(world, player.getName());
+			  prefix = plugin.Permissions.getGroupPrefix(world, group);
+			  suffix = plugin.Permissions.getGroupSuffix(world, group);
+			  userPrefix = plugin.Permissions.getPermissionString(world, player.getName(), "prefix");
+			  userSuffix = plugin.Permissions.getPermissionString(world, player.getName(), "suffix");
+		  }
 		  if (userPrefix != null) prefix = userPrefix;
 		  if (userSuffix != null) suffix = userSuffix;
 		  if (prefix == null) prefix = "";
