@@ -5,6 +5,7 @@ import java.util.Date;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerChatEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerKickEvent;
 import org.bukkit.event.player.PlayerListener;
 import org.bukkit.event.player.PlayerQuitEvent;
 
@@ -31,7 +32,16 @@ public class nChatPlayerListener extends PlayerListener{
 		 out = out.replaceAll("%", "%%");
 		 event.setQuitMessage(out);
 	 }
-	  @SuppressWarnings("deprecation")
+	 public void onPlayerKick(PlayerKickEvent event){
+		 if (plugin.leaveMessage == "") return;
+		 Player player = event.getPlayer();
+		 String[] old = new String[]{"+name", "+rname", "&"};
+		 String[] replacements = new String[]{player.getDisplayName(), player.getName(), "¤"};
+		 String out = plugin.replaceSplit(plugin.leaveMessage, old, replacements);
+		 out = out.replaceAll("%", "%%");
+		 event.setLeaveMessage(out);
+	 }
+	@SuppressWarnings("deprecation")
 	public void onPlayerChat(PlayerChatEvent event) {
 		  Player player = event.getPlayer();
 		  String message = event.getMessage();
@@ -43,7 +53,7 @@ public class nChatPlayerListener extends PlayerListener{
 		  String suffix;
 		  String userPrefix;
 		  String userSuffix;
-		  if (plugin.permissions30){
+		  if (plugin.permissions3){
 			  group = plugin.Permissions.getPrimaryGroup(world, player.getName());
 			  prefix = plugin.Permissions.getGroupRawPrefix(world, group);
 			  suffix = plugin.Permissions.getGroupRawSuffix(world, group);

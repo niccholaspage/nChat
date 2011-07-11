@@ -27,8 +27,8 @@ public class nChat extends JavaPlugin {
     public String joinMessage;
     //Leave Message
     public String leaveMessage;
-    //Is Permissions 3.0?
-    public boolean permissions30;
+    //Is Permissions 3?
+    public boolean permissions3;
     @Override
 	public void onDisable() {
 		System.out.println("nChat Disabled");
@@ -40,8 +40,9 @@ public class nChat extends JavaPlugin {
 		PluginManager pm = getServer().getPluginManager();
 		//Register events (like a boss)
 	    pm.registerEvent(Event.Type.PLAYER_CHAT, playerListener, Event.Priority.Normal, this);
-	    pm.registerEvent(Event.Type.PLAYER_JOIN, playerListener,Event.Priority.Normal, this);
-	    pm.registerEvent(Event.Type.PLAYER_QUIT, playerListener,Event.Priority.Normal, this);
+	    pm.registerEvent(Event.Type.PLAYER_JOIN, playerListener, Event.Priority.Normal, this);
+	    pm.registerEvent(Event.Type.PLAYER_QUIT, playerListener, Event.Priority.Normal, this);
+	    pm.registerEvent(Event.Type.PLAYER_KICK, playerListener, Event.Priority.Normal, this);
        //Get the infomation from the yml file.
         PluginDescriptionFile pdfFile = this.getDescription();
         //Setup Permissions
@@ -80,7 +81,7 @@ public class nChat extends JavaPlugin {
         if (Permissions == null) {
             if (perm != null) {
                 Permissions = ((Permissions)perm).getHandler();
-                permissions30 = perm.getDescription().getVersion().startsWith("3.0");
+                permissions3 = perm.getDescription().getVersion().startsWith("3");
             } else {
             	System.out.println("[nChat] Permissions not detected, disabling nChat.");
             	getPluginLoader().disablePlugin(this);
