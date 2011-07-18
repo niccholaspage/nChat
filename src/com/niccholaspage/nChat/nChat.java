@@ -69,8 +69,8 @@ public class nChat extends JavaPlugin {
 		writeNode("nChat.messageformat", "[+prefix+group+suffix&f] +name: +message", config);
 		writeNode("nChat.colorcharacter", "~", config);
 		writeNode("nChat.timestampformat", "hh:mm:ss", config);
-		writeNode("nChat.joinmessage", "+e+rname has joined the game", config);
-		writeNode("nChat.leavemessage", "+e+rname has left the game", config);
+		writeNode("nChat.joinmessage", "&e+rname has joined the game", config);
+		writeNode("nChat.leavemessage", "&e+rname has left the game", config);
 		config.save();
 		// Reading from yml file
 		messageFormat = config.getString("nChat.messageformat");
