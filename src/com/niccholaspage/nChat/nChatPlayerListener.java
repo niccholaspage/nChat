@@ -60,16 +60,19 @@ public class nChatPlayerListener extends PlayerListener{
 		return out;
 	}
 	public void onPlayerJoin(PlayerJoinEvent event){
+		if (plugin.Permissions == null) return;
 		event.setJoinMessage(formatMessage(plugin.joinMessage, event));
 	}
 	public void onPlayerQuit(PlayerQuitEvent event){
+		if (plugin.Permissions == null) return;
 		event.setQuitMessage(formatMessage(plugin.leaveMessage, event));
 	}
 	public void onPlayerKick(PlayerKickEvent event){
+		if (plugin.Permissions == null) return;
 		event.setLeaveMessage(formatMessage(plugin.leaveMessage, event));
 	}
 	public void onPlayerChat(PlayerChatEvent event) {
-		if (event.getMessage().startsWith("/")) return;
+		if (event.getMessage().startsWith("/") || plugin.Permissions == null) return;
 		event.setFormat(formatMessage(plugin.messageFormat, event));
 	}
 }

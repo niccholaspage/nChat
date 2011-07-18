@@ -81,15 +81,11 @@ public class nChat extends JavaPlugin {
 	}
 	private void setupPermissions() {
 		Plugin perm = this.getServer().getPluginManager().getPlugin("Permissions");
-
-		if (Permissions == null) {
-			if (perm != null) {
-				Permissions = ((Permissions)perm).getHandler();
-				permissions3 = perm.getDescription().getVersion().startsWith("3");
-			} else {
-				System.out.println("[nChat] Permissions not detected, disabling nChat.");
-				getPluginLoader().disablePlugin(this);
-			}
+		if (perm != null) {
+			Permissions = ((Permissions)perm).getHandler();
+			permissions3 = perm.getDescription().getVersion().startsWith("3");
+		} else {
+			System.out.println("[nChat] Permissions not detected, no formatting.");
 		}
 	}
 
@@ -107,7 +103,7 @@ public class nChat extends JavaPlugin {
 	private void writeNode(String node,Object value, Configuration config){
 		if (config.getProperty(node) == null) config.setProperty(node, value);
 	}
-	
+
 	public boolean hasPermission(CommandSender sender, String permission){
 		if (sender instanceof Player){
 			return Permissions.has((Player)sender, permission);
