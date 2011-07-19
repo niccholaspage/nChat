@@ -80,7 +80,7 @@ public class nChat extends JavaPlugin {
 		leaveMessage = config.getString("nChat.leavemessage");
 	}
 	private void setupPermissions() {
-		Plugin perm = this.getServer().getPluginManager().getPlugin("Permissions");
+		Plugin perm = getServer().getPluginManager().getPlugin("Permissions");
 		if (perm != null) {
 			Permissions = ((Permissions)perm).getHandler();
 			permissions3 = perm.getDescription().getVersion().startsWith("3");
