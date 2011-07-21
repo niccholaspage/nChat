@@ -57,7 +57,7 @@ public class nChatPlayerListener extends PlayerListener{
 		SimpleDateFormat dateFormat = new SimpleDateFormat(plugin.timestampFormat);
 		String time = dateFormat.format(now);
 		String[] old = new String[]{"+name", "+rname", "+group", "+prefix", "+suffix", "+world", "+timestamp", "&", "+message"};
-		String[] replacements = new String[]{player.getDisplayName(), player.getName(), group, prefix, suffix, world, time, "\u00A7$2", message};
+		String[] replacements = new String[]{player.getDisplayName(), player.getName(), group, prefix, suffix, world, time, "\u00A7", message};
 		out = plugin.replaceSplit(out, old, replacements);
 		if ((plugin.Permissions.has(player, "nChat.colors")) || (plugin.Permissions.has(player, "nChat.colours"))) {
 			out = out.replace(plugin.colorCharacter, "¤");
