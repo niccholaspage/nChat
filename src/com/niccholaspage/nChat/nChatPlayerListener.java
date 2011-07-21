@@ -10,6 +10,8 @@ import org.bukkit.event.player.PlayerKickEvent;
 import org.bukkit.event.player.PlayerListener;
 import org.bukkit.event.player.PlayerQuitEvent;
 
+import com.nijiko.permissions.Group;
+
 public class nChatPlayerListener extends PlayerListener{
 	public nChat plugin;
 
@@ -34,6 +36,10 @@ public class nChatPlayerListener extends PlayerListener{
 		String userSuffix;
 		if (plugin.permissions3){
 			group = plugin.Permissions.getPrimaryGroup(world, player.getName());
+			Group groupObject = plugin.Permissions.getDefaultGroup("?");
+			if (plugin.Permissions.getDefaultGroup(world) == null && group.equals("Default") && groupObject != null){
+				group = groupObject.getName();
+			}
 			userPrefix = plugin.Permissions.getUserPrefix(world, player.getName());
 			userSuffix = plugin.Permissions.getUserSuffix(world, player.getName());
 		}else {

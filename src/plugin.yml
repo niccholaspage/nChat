@@ -2,7 +2,7 @@ name: nChat
 
 main: com.niccholaspage.nChat.nChat
 
-version: 0.6
+version: "${project.version}"
 
 commands:
   nchat:
