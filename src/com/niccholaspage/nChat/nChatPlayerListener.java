@@ -60,7 +60,7 @@ public class nChatPlayerListener extends PlayerListener{
 		String[] replacements = new String[]{player.getDisplayName(), player.getName(), group, prefix, suffix, world, time, "\u00A7", message};
 		out = plugin.replaceSplit(out, old, replacements);
 		if ((plugin.Permissions.has(player, "nChat.colors")) || (plugin.Permissions.has(player, "nChat.colours"))) {
-			out = out.replace(plugin.colorCharacter, "¤");
+			out = out.replace(plugin.colorCharacter, "\u00A7");
 		}
 		out = out.replaceAll("%", "%%");
 		return out;
