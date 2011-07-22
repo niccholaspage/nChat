@@ -12,6 +12,7 @@ public class MeCommand implements CommandExecutor {
 		this.plugin = plugin;
 	}
 	public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args){
+		if (plugin.Permissions == null) return true;
 		if (!plugin.hasPermission(sender, "nChat.me")) return true;
 		if (args.length < 1){
 			return false;

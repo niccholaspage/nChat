@@ -13,6 +13,7 @@ public class nChatCommand implements CommandExecutor {
 		this.plugin = plugin;
 	}
 	public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args){
+		if (plugin.Permissions == null) return true;
 		if (args.length < 1){
 			if (!plugin.hasPermission(sender, "nChat.version")) return true;
 			sender.sendMessage(ChatColor.BLUE + "nChat " + plugin.getDescription().getVersion() + " by niccholaspage");
