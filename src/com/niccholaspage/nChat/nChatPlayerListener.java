@@ -14,18 +14,18 @@ public class nChatPlayerListener extends PlayerListener{
 	}
 	public void onPlayerJoin(PlayerJoinEvent event){
 		if (plugin.Permissions == null) return;
-		event.setJoinMessage(plugin.formatMessage(plugin.joinMessage, event));
+		event.setJoinMessage(plugin.formatMessage(event.getPlayer(), plugin.joinMessage, null));
 	}
 	public void onPlayerQuit(PlayerQuitEvent event){
 		if (plugin.Permissions == null) return;
-		event.setQuitMessage(plugin.formatMessage(plugin.leaveMessage, event));
+		event.setQuitMessage(plugin.formatMessage(event.getPlayer(), plugin.leaveMessage, null));
 	}
 	public void onPlayerKick(PlayerKickEvent event){
 		if (plugin.Permissions == null) return;
-		event.setLeaveMessage(plugin.formatMessage(plugin.leaveMessage, event));
+		event.setLeaveMessage(plugin.formatMessage(event.getPlayer(), plugin.leaveMessage, null));
 	}
 	public void onPlayerChat(PlayerChatEvent event) {
 		if (event.getMessage().startsWith("/") || plugin.Permissions == null) return;
-		event.setFormat(plugin.formatMessage(plugin.messageFormat, event));
+		event.setFormat(plugin.formatMessage(event.getPlayer(), plugin.messageFormat, event.getMessage()));
 	}
 }

@@ -8,8 +8,6 @@ import java.util.Date;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
-import org.bukkit.event.player.PlayerChatEvent;
-import org.bukkit.event.player.PlayerEvent;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.PluginManager;
@@ -91,15 +89,10 @@ public class nChat extends JavaPlugin {
 		leaveMessage = config.getString("nChat.leavemessage");
 	}
 	@SuppressWarnings("deprecation")
-	public String formatMessage(String out, PlayerEvent event){
+	public String formatMessage(Player player, String out, String message){
 		if (out == null || out == ""){
 			return null;
 		}
-		String message = "";
-		if (event instanceof PlayerChatEvent){
-			message = ((PlayerChatEvent)event).getMessage();
-		}
-		Player player = event.getPlayer();
 		String world = player.getWorld().getName();
 		String group;
 		String prefix = null;
