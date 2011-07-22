@@ -2,18 +2,22 @@ package com.niccholaspage.nChat;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
-import org.bukkit.ChatColor;
-import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
+import org.bukkit.event.player.PlayerChatEvent;
+import org.bukkit.event.player.PlayerEvent;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.util.config.Configuration;
 
+import com.niccholaspage.nChat.commands.*;
+import com.nijiko.permissions.Group;
 import com.nijiko.permissions.PermissionHandler;
 import com.nijikokun.bukkit.Permissions.Permissions;
 
@@ -23,6 +27,8 @@ public class nChat extends JavaPlugin {
 	public PermissionHandler Permissions;
 	//Message Format
 	public String messageFormat;
+	//The me command message format
+	public String meFormat;
 	//Color character
 	public String colorCharacter;
 	//Timestamp format
@@ -47,8 +53,10 @@ public class nChat extends JavaPlugin {
 		pm.registerEvent(Event.Type.PLAYER_JOIN, playerListener, Event.Priority.Normal, this);
 		pm.registerEvent(Event.Type.PLAYER_QUIT, playerListener, Event.Priority.Normal, this);
 		pm.registerEvent(Event.Type.PLAYER_KICK, playerListener, Event.Priority.Normal, this);
+		//Register commands
+		getCommand("nchat").setExecutor(new nChatCommand(this));
 		//Get the infomation from the yml file.
-		PluginDescriptionFile pdfFile = this.getDescription();
+		PluginDescriptionFile pdfFile = getDescription();
 		//Setup Permissions
 		setupPermissions();
 		readConfig();
@@ -56,7 +64,7 @@ public class nChat extends JavaPlugin {
 		System.out.println( pdfFile.getName() + " version " + pdfFile.getVersion() + " is enabled!" );
 
 	}
-	private void readConfig() {
+	public void readConfig() {
 		new File("plugins/nChat/").mkdir();
 		try {
 			new File("plugins/nChat/config.yml").createNewFile();
@@ -67,6 +75,7 @@ public class nChat extends JavaPlugin {
 		config.load();
 		writeNode("nChat", "", config);
 		writeNode("nChat.messageformat", "[+prefix+group+suffix&f] +name: +message", config);
+		writeNode("nChat.meformat", "* +rname +message", config);
 		writeNode("nChat.colorcharacter", "~", config);
 		writeNode("nChat.timestampformat", "hh:mm:ss", config);
 		writeNode("nChat.joinmessage", "&e+rname has joined the game", config);
@@ -78,6 +87,53 @@ public class nChat extends JavaPlugin {
 		timestampFormat = config.getString("nChat.timestampformat");
 		joinMessage = config.getString("nChat.joinmessage");
 		leaveMessage = config.getString("nChat.leavemessage");
+	}
+	@SuppressWarnings("deprecation")
+	public String formatMessage(String out, PlayerEvent event){
+		if (out == null || out == ""){
+			return null;
+		}
+		String message = "";
+		if (event instanceof PlayerChatEvent){
+			message = ((PlayerChatEvent)event).getMessage();
+		}
+		Player player = event.getPlayer();
+		String world = player.getWorld().getName();
+		String group;
+		String prefix = null;
+		String suffix = null;
+		String userPrefix;
+		String userSuffix;
+		if (permissions3){
+			group = Permissions.getPrimaryGroup(world, player.getName());
+			Group groupObject = Permissions.getDefaultGroup("?");
+			if (Permissions.getDefaultGroup(world) == null && group.equals("Default") && groupObject != null){
+				group = groupObject.getName();
+			}
+			userPrefix = Permissions.getUserPrefix(world, player.getName());
+			userSuffix = Permissions.getUserSuffix(world, player.getName());
+		}else {
+			group = Permissions.getGroup(world, player.getName());
+			prefix = Permissions.getGroupPrefix(world, group);
+			suffix = Permissions.getGroupSuffix(world, group);
+			userPrefix = Permissions.getPermissionString(world, player.getName(), "prefix");
+			userSuffix = Permissions.getPermissionString(world, player.getName(), "suffix");
+		}
+		if (userPrefix != null) prefix = userPrefix;
+		if (userSuffix != null) suffix = userSuffix;
+		if (prefix == null) prefix = "";
+		if (suffix == null) suffix = "";
+		Date now = new Date();
+		SimpleDateFormat dateFormat = new SimpleDateFormat(timestampFormat);
+		String time = dateFormat.format(now);
+		String[] old = new String[]{"+name", "+rname", "+group", "+prefix", "+suffix", "+world", "+timestamp", "&", "+message"};
+		String[] replacements = new String[]{player.getDisplayName(), player.getName(), group, prefix, suffix, world, time, "\u00A7", message};
+		out = replaceSplit(out, old, replacements);
+		if ((Permissions.has(player, "nChat.colors")) || (Permissions.has(player, "nChat.colours"))) {
+			out = out.replace(colorCharacter, "\u00A7");
+		}
+		out = out.replaceAll("%", "%%");
+		return out;
 	}
 	private void setupPermissions() {
 		Plugin perm = getServer().getPluginManager().getPlugin("Permissions");
@@ -110,19 +166,5 @@ public class nChat extends JavaPlugin {
 		}else {
 			return true;
 		}
-	}
-
-	public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args){
-		if (args.length < 1){
-			if (!hasPermission(sender, "nChat.version")) return true;
-			sender.sendMessage(ChatColor.BLUE + "nChat " + getDescription().getVersion() + " by niccholaspage");
-			return true;
-		}
-		if (args[0].equalsIgnoreCase("reload")){
-			if (!hasPermission(sender, "nChat.reload")) return true;
-			readConfig();
-			sender.sendMessage(ChatColor.BLUE + "The nChat configuration has been reloaded.");
-		}
-		return true;
 	}
 }

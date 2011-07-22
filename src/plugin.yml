@@ -8,3 +8,6 @@ commands:
   nchat:
     usage:
     description:
+  me:
+    usage: /<command> message
+    description:
