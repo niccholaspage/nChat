@@ -53,13 +53,14 @@ public class nChat extends JavaPlugin {
 		pm.registerEvent(Event.Type.PLAYER_JOIN, playerListener, Event.Priority.Normal, this);
 		pm.registerEvent(Event.Type.PLAYER_QUIT, playerListener, Event.Priority.Normal, this);
 		pm.registerEvent(Event.Type.PLAYER_KICK, playerListener, Event.Priority.Normal, this);
-		//Register commands
-		getCommand("nchat").setExecutor(new nChatCommand(this));
 		//Get the infomation from the yml file.
 		PluginDescriptionFile pdfFile = getDescription();
 		//Setup Permissions
 		setupPermissions();
 		readConfig();
+		//Register commands
+		getCommand("nchat").setExecutor(new nChatCommand(this));
+		getCommand("me").setExecutor(new MeCommand(this));
 		//Print that the plugin has been enabled!
 		System.out.println( pdfFile.getName() + " version " + pdfFile.getVersion() + " is enabled!" );
 
@@ -83,6 +84,7 @@ public class nChat extends JavaPlugin {
 		config.save();
 		// Reading from yml file
 		messageFormat = config.getString("nChat.messageformat");
+		meFormat = config.getString("nChat.meformat");
 		colorCharacter = config.getString("nChat.colorcharacter");
 		timestampFormat = config.getString("nChat.timestampformat");
 		joinMessage = config.getString("nChat.joinmessage");
