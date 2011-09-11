@@ -9,9 +9,11 @@ import com.niccholaspage.nChat.nChat;
 
 public class nChatCommand implements CommandExecutor {
 	private final nChat plugin;
+	
 	public nChatCommand(nChat plugin){
-		this.plugin = plugin;
+		this.plugin =plugin;
 	}
+	
 	public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args){
 		if (plugin.Permissions == null) return true;
 		
