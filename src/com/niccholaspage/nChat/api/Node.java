@@ -3,7 +3,7 @@ package com.niccholaspage.nChat.api;
 public class Node {
 	private final String name;
 
-	private String value;
+	private String value = "";
 
 	public Node(String name){
 		this.name = name;
