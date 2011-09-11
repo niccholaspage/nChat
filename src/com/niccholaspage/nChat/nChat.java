@@ -157,7 +157,7 @@ public class nChat extends JavaPlugin {
 		out = replaceSplit(out, old, replacements);
 		
 		//API time
-		ChatFormatEvent event = new ChatFormatEvent();
+		ChatFormatEvent event = new ChatFormatEvent(player);
 		
 		getServer().getPluginManager().callEvent(event);
 		
