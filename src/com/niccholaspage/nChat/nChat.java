@@ -14,6 +14,8 @@ import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.util.config.Configuration;
 
+import com.niccholaspage.nChat.api.ChatFormatEvent;
+import com.niccholaspage.nChat.api.Node;
 import com.niccholaspage.nChat.commands.*;
 import com.nijiko.permissions.PermissionHandler;
 import com.nijikokun.bukkit.Permissions.Permissions;
@@ -153,6 +155,15 @@ public class nChat extends JavaPlugin {
 		String[] replacements = new String[]{player.getDisplayName(), player.getName(), group, prefix, suffix, world, time, "\u00A7", message};
 		
 		out = replaceSplit(out, old, replacements);
+		
+		//API time
+		ChatFormatEvent event = new ChatFormatEvent();
+		
+		getServer().getPluginManager().callEvent(event);
+		
+		for (Node node : event.getNodes()){
+			out = out.replace("+" + node.getName(), node.getValue());
+		}
 		
 		if ((Permissions.has(player, "nChat.colors")) || (Permissions.has(player, "nChat.colours"))) {
 			out = out.replace(colorCharacter, "\u00A7");
