@@ -35,12 +35,12 @@ public class nChat extends JavaPlugin {
 	public String leaveMessage;
 	//Is Permissions 3?
 	public boolean permissions3;
-	@Override
+	
 	public void onDisable() {
 		System.out.println("nChat Disabled");
 
 	}
-	@Override
+	
 	public void onEnable() {
 		//Create the pluginmanage pm.
 		PluginManager pm = getServer().getPluginManager();
@@ -62,6 +62,7 @@ public class nChat extends JavaPlugin {
 		System.out.println("nChat version " + getDescription().getVersion() + " is enabled!");
 
 	}
+	
 	public void readConfig() {
 		getDataFolder().mkdir();
 		
@@ -159,6 +160,7 @@ public class nChat extends JavaPlugin {
 		
 		return out;
 	}
+	
 	private void setupPermissions() {
 		Plugin perm = getServer().getPluginManager().getPlugin("Permissions");
 		
