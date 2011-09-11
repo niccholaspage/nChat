@@ -11,7 +11,7 @@ public class nChatCommand implements CommandExecutor {
 	private final nChat plugin;
 	
 	public nChatCommand(nChat plugin){
-		this.plugin =plugin;
+		this.plugin = plugin;
 	}
 	
 	public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args){
