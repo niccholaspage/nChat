@@ -162,6 +162,10 @@ public class nChat extends JavaPlugin {
 		getServer().getPluginManager().callEvent(event);
 		
 		for (Node node : event.getNodes()){
+			if (node.getValue() == null){
+				continue;
+			}
+			
 			out = out.replace("+" + node.getName(), node.getValue());
 		}
 		
