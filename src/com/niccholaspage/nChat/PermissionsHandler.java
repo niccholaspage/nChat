@@ -57,7 +57,7 @@ public class PermissionsHandler {
 	
 	public boolean hasPermission(CommandSender sender, String permission){
 		switch (type){
-		case PERMISSIONS_EX:
+		case PERMISSIONS_EX: return internalPEXCheck(sender, permission);
 		case PERMISSIONS_3:
 		case PERMISSIONS_2: return internalP2Check(sender, permission);
 		default: return sender.hasPermission(permission);
@@ -76,7 +76,7 @@ public class PermissionsHandler {
 	public String getSuffix(String name, String world){
 		switch (type){
 		case PERMISSIONS_2: return internalP2Suffix(name, world);
-		case PERMISSIONS_3: return ((Permissions) plugin).getHandler().getUserPrefix(world, name);
+		case PERMISSIONS_3: return ((Permissions) plugin).getHandler().getUserSuffix(world, name);
 		case PERMISSIONS_EX: return PermissionsEx.getPermissionManager().getUser(name).getOption("suffix");
 		default: return "Not supported yet";
 		}
@@ -124,6 +124,16 @@ public class PermissionsHandler {
 		if (suffix == null) suffix = "";
 		
 		return suffix;
+	}
+	
+	private boolean internalPEXCheck(CommandSender sender, String permission){
+		if (sender instanceof Player){
+			Player player = (Player) sender;
+			
+			return PermissionsEx.getPermissionManager().has(player, permission);
+		} else {
+			return true;
+		}
 	}
 	
 	private boolean internalP2Check(CommandSender sender, String permission){
