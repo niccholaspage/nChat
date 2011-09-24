@@ -15,13 +15,11 @@ public class MeCommand implements CommandExecutor {
 	}
 	
 	public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args){
-		if (plugin.Permissions == null) return true;
-		
 		if (!(sender instanceof Player)) return true;
 		
 		Player player = (Player) sender;
 		
-		if (!plugin.hasPermission(sender, "nChat.me")) return true;
+		if (!plugin.getPermissionsHandler().hasPermission(sender, "nChat.me")) return true;
 		
 		String message = arrayToString(args, " ");
 		

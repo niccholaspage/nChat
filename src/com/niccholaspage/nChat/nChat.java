@@ -5,11 +5,9 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.Event.Priority;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.util.config.Configuration;
@@ -17,13 +15,9 @@ import org.bukkit.util.config.Configuration;
 import com.niccholaspage.nChat.api.ChatFormatEvent;
 import com.niccholaspage.nChat.api.Node;
 import com.niccholaspage.nChat.commands.*;
-import com.nijiko.permissions.PermissionHandler;
-import com.nijikokun.bukkit.Permissions.Permissions;
 
 public class nChat extends JavaPlugin {
 	private final nChatPlayerListener playerListener = new nChatPlayerListener(this);
-	//Permissions Handler
-	public PermissionHandler Permissions;
 	//Message Format
 	public String messageFormat;
 	//The me command message format
@@ -36,8 +30,8 @@ public class nChat extends JavaPlugin {
 	public String joinMessage;
 	//Leave Message
 	public String leaveMessage;
-	//Is Permissions 3?
-	public boolean permissions3;
+	//Permission Handler
+	private PermissionsHandler permissionsHandler;
 	
 	public void onDisable() {
 		System.out.println("nChat Disabled");
@@ -45,7 +39,6 @@ public class nChat extends JavaPlugin {
 	}
 	
 	public void onEnable() {
-		//Create the pluginmanage pm.
 		PluginManager pm = getServer().getPluginManager();
 		
 		//Register events (like a boss)
@@ -54,8 +47,8 @@ public class nChat extends JavaPlugin {
 		pm.registerEvent(Event.Type.PLAYER_QUIT, playerListener, Priority.Lowest, this);
 		pm.registerEvent(Event.Type.PLAYER_KICK, playerListener, Priority.Lowest, this);
 		
-		//Setup Permissions
-		setupPermissions();
+		permissionsHandler = new PermissionsHandler(getServer());
+		
 		readConfig();
 		
 		//Register commands
@@ -100,49 +93,18 @@ public class nChat extends JavaPlugin {
 		leaveMessage = config.getString("nChat.leavemessage");
 	}
 	
-	@SuppressWarnings("deprecation")
 	public String formatMessage(Player player, String out, String message){
 		if (out == null || out == ""){
 			return null;
 		}
 		
+		String name = player.getName();
+		
 		String world = player.getWorld().getName();
 		
-		String group;
+		String prefix = permissionsHandler.getPrefix(name, world);
 		
-		String prefix = null;
-		
-		String suffix = null;
-		
-		String userPrefix;
-		
-		String userSuffix;
-		
-		if (permissions3){
-			group = Permissions.getPrimaryGroup(world, player.getName());
-			
-			userPrefix = Permissions.getUserPrefix(world, player.getName());
-			
-			userSuffix = Permissions.getUserSuffix(world, player.getName());
-		}else {
-			group = Permissions.getGroup(world, player.getName());
-			
-			prefix = Permissions.getGroupPrefix(world, group);
-			
-			suffix = Permissions.getGroupSuffix(world, group);
-			
-			userPrefix = Permissions.getPermissionString(world, player.getName(), "prefix");
-			
-			userSuffix = Permissions.getPermissionString(world, player.getName(), "suffix");
-		}
-		
-		if (userPrefix != null) prefix = userPrefix;
-		
-		if (userSuffix != null) suffix = userSuffix;
-		
-		if (prefix == null) prefix = "";
-		
-		if (suffix == null) suffix = "";
+		String suffix = permissionsHandler.getSuffix(name, world);
 		
 		Date now = new Date();
 		
@@ -152,7 +114,7 @@ public class nChat extends JavaPlugin {
 		
 		String[] old = new String[]{"+name", "+rname", "+group", "+prefix", "+suffix", "+world", "+timestamp", "&", "+message"};
 		
-		String[] replacements = new String[]{player.getDisplayName(), player.getName(), group, prefix, suffix, world, time, "\u00A7", message};
+		String[] replacements = new String[]{player.getDisplayName(), name, permissionsHandler.getGroup(name, world), prefix, suffix, world, time, "\u00A7", message};
 		
 		out = replaceSplit(out, old, replacements);
 		
@@ -169,7 +131,7 @@ public class nChat extends JavaPlugin {
 			out = out.replace("+" + node.getName(), node.getValue());
 		}
 		
-		if ((Permissions.has(player, "nChat.colors")) || (Permissions.has(player, "nChat.colours"))) {
+		if ((permissionsHandler.hasPermission(player, "nChat.colors")) || (permissionsHandler.hasPermission(player, "nChat.colours"))) {
 			out = out.replace(colorCharacter, "\u00A7");
 		}
 		
@@ -178,16 +140,8 @@ public class nChat extends JavaPlugin {
 		return out;
 	}
 	
-	private void setupPermissions() {
-		Plugin perm = getServer().getPluginManager().getPlugin("Permissions");
-		
-		if (perm != null) {
-			Permissions = ((Permissions)perm).getHandler();
-			
-			permissions3 = perm.getDescription().getVersion().startsWith("3");
-		} else {
-			System.out.println("[nChat] Permissions not detected, no formatting.");
-		}
+	public PermissionsHandler getPermissionsHandler(){
+		return permissionsHandler;
 	}
 
 	public String replaceSplit(String str, String[] search, String[] replace) {
@@ -208,13 +162,5 @@ public class nChat extends JavaPlugin {
 
 	private void writeNode(String node,Object value, Configuration config){
 		if (config.getProperty(node) == null) config.setProperty(node, value);
-	}
-
-	public boolean hasPermission(CommandSender sender, String permission){
-		if (sender instanceof Player){
-			return Permissions.has((Player)sender, permission);
-		}else {
-			return true;
-		}
 	}
 }
