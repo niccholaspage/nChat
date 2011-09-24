@@ -25,7 +25,13 @@ public class PermissionsHandler {
 	public PermissionsHandler(Server server){
 		Plugin permissions = server.getPluginManager().getPlugin("Permissions");
 		
-		if (permissions != null) {
+		Plugin PEX = server.getPluginManager().getPlugin("PermissionsEx");
+		
+		if(PEX != null){
+			type = PermissionType.PERMISSIONS_EX;
+			
+			plugin = permissions;
+		}else if (permissions != null) {
 			String version = permissions.getDescription().getVersion();
 			
 			if (version.startsWith("3")){
@@ -35,18 +41,17 @@ public class PermissionsHandler {
 			}
 			
 			plugin = permissions;
-		} else {
-			Plugin PEX = server.getPluginManager().getPlugin("PermissionsEx");
+		}else {
+
+			type = PermissionType.BUKKIT_PERMS;
 			
-			if(PEX != null){
-				type = PermissionType.PERMISSIONS_EX;
-				
-				plugin = permissions;
-			}else {
-				type = PermissionType.BUKKIT_PERMS;
-				
-				plugin = null;
-			}
+			plugin = null;
+		}
+		
+		if (plugin == null){
+			System.out.println("[nChat] Hooked into Bukkit Perms");
+		}else {
+			System.out.println("[nChat] Hooked into " + plugin.getDescription().getName() + " " + plugin.getDescription().getVersion());
 		}
 	}
 	
@@ -72,7 +77,7 @@ public class PermissionsHandler {
 		switch (type){
 		case PERMISSIONS_2: return internalP2Suffix(name, world);
 		case PERMISSIONS_3: return ((Permissions) plugin).getHandler().getUserPrefix(world, name);
-		case PERMISSIONS_EX: return PermissionsEx.getPermissionManager().getUser(name).getOption("prefix");
+		case PERMISSIONS_EX: return PermissionsEx.getPermissionManager().getUser(name).getOption("suffix");
 		default: return "Not supported yet";
 		}
 	}
