@@ -42,7 +42,6 @@ public class PermissionsHandler {
 			
 			plugin = permissions;
 		}else {
-
 			type = PermissionType.BUKKIT_PERMS;
 			
 			plugin = null;
