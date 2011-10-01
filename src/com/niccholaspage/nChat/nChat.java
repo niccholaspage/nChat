@@ -14,6 +14,7 @@ import org.bukkit.util.config.Configuration;
 
 import com.niccholaspage.nChat.api.ChatFormatEvent;
 import com.niccholaspage.nChat.api.Node;
+import com.niccholaspage.nChat.api.PlayerChatFormatEvent;
 import com.niccholaspage.nChat.commands.*;
 
 public class nChat extends JavaPlugin {
@@ -98,13 +99,31 @@ public class nChat extends JavaPlugin {
 			return null;
 		}
 		
-		String name = player.getName();
+		String name = "";
 		
-		String world = player.getWorld().getName();
+		String displayName = "";
 		
-		String prefix = permissionsHandler.getPrefix(name, world);
+		String world = "";
 		
-		String suffix = permissionsHandler.getSuffix(name, world);
+		String group = "";
+		
+		String prefix = "";
+		
+		String suffix = "";
+		
+		if (player != null){
+			name = player.getName();
+			
+			displayName = player.getDisplayName();
+			
+			world = player.getWorld().getName();
+			
+			group = permissionsHandler.getGroup(name, world);
+			
+			prefix = permissionsHandler.getPrefix(name, world);
+			
+			suffix = permissionsHandler.getSuffix(name, world);
+		}
 		
 		Date now = new Date();
 		
@@ -114,12 +133,18 @@ public class nChat extends JavaPlugin {
 		
 		String[] old = new String[]{"+name", "+rname", "+group", "+prefix", "+suffix", "+world", "+timestamp", "&", "+message"};
 		
-		String[] replacements = new String[]{player.getDisplayName(), name, permissionsHandler.getGroup(name, world), prefix, suffix, world, time, "\u00A7", message};
+		String[] replacements = new String[]{displayName, name, group, prefix, suffix, world, time, "\u00A7", message};
 		
 		out = replaceSplit(out, old, replacements);
 		
 		//API time
-		ChatFormatEvent event = new ChatFormatEvent(player);
+		ChatFormatEvent event;
+		
+		if (player != null){
+			event = new PlayerChatFormatEvent(player);
+		}else {
+			event = new ChatFormatEvent();
+		}
 		
 		getServer().getPluginManager().callEvent(event);
 		
@@ -131,8 +156,10 @@ public class nChat extends JavaPlugin {
 			out = out.replace("+" + node.getName(), node.getValue());
 		}
 		
-		if ((permissionsHandler.hasPermission(player, "nChat.colors")) || (permissionsHandler.hasPermission(player, "nChat.colours"))) {
-			out = out.replace(colorCharacter, "\u00A7");
+		if (player != null){
+			if ((permissionsHandler.hasPermission(player, "nChat.colors")) || (permissionsHandler.hasPermission(player, "nChat.colours"))) {
+				out = out.replace(colorCharacter, "\u00A7");
+			}
 		}
 		
 		out = out.replaceAll("%", "%%");

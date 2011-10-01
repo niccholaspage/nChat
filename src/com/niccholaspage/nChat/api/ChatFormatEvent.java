@@ -3,19 +3,14 @@ package com.niccholaspage.nChat.api;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 
 @SuppressWarnings("serial")
 public class ChatFormatEvent extends Event {
-	private final Player player;
-	
 	private final Set<Node> nodes;
 	
-	public ChatFormatEvent(Player player) {
+	public ChatFormatEvent() {
 		super("ChatFormatEvent");
-		
-		this.player = player;
 		
 		this.nodes = new HashSet<Node>();
 	}
@@ -32,10 +27,6 @@ public class ChatFormatEvent extends Event {
 		nodes.add(node);
 		
 		return node;
-	}
-	
-	public Player getPlayer(){
-		return player;
 	}
 	
 	public Set<Node> getNodes(){
