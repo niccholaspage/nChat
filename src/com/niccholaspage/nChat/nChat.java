@@ -8,10 +8,13 @@ import java.util.Date;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.Event.Priority;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.util.config.Configuration;
 
+import com.niccholaspage.nChat.permissions.*;
+import com.niccholaspage.nChat.permissions.PermissionsHandler;
 import com.niccholaspage.nChat.api.ChatFormatEvent;
 import com.niccholaspage.nChat.api.Node;
 import com.niccholaspage.nChat.api.PlayerChatFormatEvent;
@@ -48,7 +51,7 @@ public class nChat extends JavaPlugin {
 		pm.registerEvent(Event.Type.PLAYER_QUIT, playerListener, Priority.Lowest, this);
 		pm.registerEvent(Event.Type.PLAYER_KICK, playerListener, Priority.Lowest, this);
 		
-		permissionsHandler = new PermissionsHandler(getServer());
+		setupPermissions();
 		
 		readConfig();
 		
@@ -59,6 +62,26 @@ public class nChat extends JavaPlugin {
 		//Print that the plugin has been enabled!
 		System.out.println("nChat version " + getDescription().getVersion() + " is enabled!");
 
+	}
+	
+	private void setupPermissions(){
+		Plugin permissions = getServer().getPluginManager().getPlugin("Permissions");
+		
+		Plugin PEX = getServer().getPluginManager().getPlugin("PermissionsEx");
+		
+		if(PEX != null){
+			permissionsHandler = new PermissionsExHandler();
+		}else if (permissions != null) {
+			String version = permissions.getDescription().getVersion();
+			
+			if (version.startsWith("3")){
+				permissionsHandler = new Permissions3Handler(permissions);
+			}else {
+				permissionsHandler = new Permissions2Handler(permissions);
+			}
+		}else {
+			permissionsHandler = new DinnerPermissionsHandler();
+		}
 	}
 	
 	public void readConfig() {
