@@ -1,6 +1,7 @@
 package com.niccholaspage.nChat.api;
 
 import org.bukkit.event.CustomEventListener;
+import org.bukkit.event.Event;
 
 public class nChatEventListener extends CustomEventListener {
 	/**
@@ -10,5 +11,11 @@ public class nChatEventListener extends CustomEventListener {
 	 */
 	public void onChatFormat(ChatFormatEvent event) {
 
+	}
+	
+	public void onCustomEvent(Event event){
+		if (event instanceof ChatFormatEvent){
+			onChatFormat((ChatFormatEvent) event);
+		}
 	}
 }
