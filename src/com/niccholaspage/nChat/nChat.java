@@ -81,7 +81,7 @@ public class nChat extends JavaPlugin {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
+		
 		configHandler = new ConfigHandler(configFile);
 	}
 	

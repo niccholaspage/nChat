@@ -53,7 +53,7 @@ public class ConfigHandler {
 			e.printStackTrace();
 		}
 		
-		messageFormat = config.getString("defaultConfig");
+		messageFormat = config.getString("messageFormat");
 		
 		meFormat = config.getString("meformat");
 		
