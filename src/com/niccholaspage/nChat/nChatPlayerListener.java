@@ -13,17 +13,17 @@ public class nChatPlayerListener extends PlayerListener {
 		this.plugin = plugin;
 	}
 	public void onPlayerJoin(PlayerJoinEvent event){
-		event.setJoinMessage(plugin.formatMessage(event.getPlayer(), plugin.joinMessage, null));
+		event.setJoinMessage(plugin.formatMessage(event.getPlayer(), plugin.getConfigHandler().getJoinMessage(), null));
 	}
 	public void onPlayerQuit(PlayerQuitEvent event){
-		event.setQuitMessage(plugin.formatMessage(event.getPlayer(), plugin.leaveMessage, null));
+		event.setQuitMessage(plugin.formatMessage(event.getPlayer(),  plugin.getConfigHandler().getLeaveMessage(), null));
 	}
 	public void onPlayerKick(PlayerKickEvent event){
-		event.setLeaveMessage(plugin.formatMessage(event.getPlayer(), plugin.leaveMessage, null));
+		event.setLeaveMessage(plugin.formatMessage(event.getPlayer(),  plugin.getConfigHandler().getLeaveMessage(), null));
 	}
 	public void onPlayerChat(PlayerChatEvent event) {
 		if (event.getMessage().startsWith("/")) return;
 		
-		event.setFormat(plugin.formatMessage(event.getPlayer(), plugin.messageFormat, event.getMessage()));
+		event.setFormat(plugin.formatMessage(event.getPlayer(),  plugin.getConfigHandler().getMessageFormat(), event.getMessage()));
 	}
 }

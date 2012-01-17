@@ -23,7 +23,7 @@ public class MeCommand implements CommandExecutor {
 		
 		String message = arrayToString(args, " ");
 		
-		plugin.getServer().broadcastMessage(plugin.formatMessage(player, plugin.meFormat, message));
+		plugin.getServer().broadcastMessage(plugin.formatMessage(player, plugin.getConfigHandler().getMeFormat(), message));
 		return true;
 	}
 	

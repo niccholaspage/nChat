@@ -25,7 +25,7 @@ public class nChatCommand implements CommandExecutor {
 		if (args[0].equalsIgnoreCase("reload")){
 			if (!plugin.getPermissionsHandler().hasPermission(sender, "nChat.reload")) return true;
 			
-			plugin.readConfig();
+			plugin.loadConfig();
 			
 			sender.sendMessage(ChatColor.BLUE + "The nChat configuration has been reloaded.");
 		}
