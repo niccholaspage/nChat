@@ -10,7 +10,7 @@
     <!-- Project information -->
     <groupId>com.niccholaspage</groupId>
     <artifactId>nChat</artifactId>
-    <version>0.7-SNAPSHOT</version>
+    <version>0.7</version>
     <name>nChat</name>
     <url>http://www.nicholaspage.info</url>
     <description></description>
