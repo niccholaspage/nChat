@@ -29,7 +29,7 @@ public class nChatPlayerListener extends PlayerListener {
 		if (command.toLowerCase().startsWith("/me ")){
 			String message = command.substring(command.indexOf(" ")).trim();
 			
-			plugin.getServer().broadcastMessage(plugin.formatMessage(player, message, plugin.getConfigHandler().getMeFormat()));
+			plugin.getServer().broadcastMessage(plugin.formatMessage(player, plugin.getConfigHandler().getMeFormat(), message));
 			
 			event.setCancelled(true);
 		}

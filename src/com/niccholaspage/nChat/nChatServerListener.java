@@ -18,7 +18,7 @@ public class nChatServerListener extends ServerListener {
 		if (command.toLowerCase().startsWith("/me ")){
 			String message = command.substring(command.indexOf(" ")).trim();
 			
-			plugin.getServer().broadcastMessage(plugin.formatMessage(null, message, plugin.getConfigHandler().getMeFormat()));
+			plugin.getServer().broadcastMessage(plugin.formatMessage(null, plugin.getConfigHandler().getMeFormat(), message));
 		}
 	}
 }
