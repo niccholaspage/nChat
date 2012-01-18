@@ -6,14 +6,13 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import org.bukkit.entity.Player;
-import org.bukkit.event.Event;
 import org.bukkit.event.Event.Priority;
+import org.bukkit.event.Event.Type;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.niccholaspage.nChat.permissions.*;
-import com.niccholaspage.nChat.permissions.PermissionsHandler;
 import com.niccholaspage.nChat.api.ChatFormatEvent;
 import com.niccholaspage.nChat.api.Node;
 import com.niccholaspage.nChat.api.PlayerChatFormatEvent;
@@ -35,10 +34,11 @@ public class nChat extends JavaPlugin {
 		PluginManager pm = getServer().getPluginManager();
 		
 		//Register events (like a boss)
-		pm.registerEvent(Event.Type.PLAYER_CHAT, playerListener, Priority.Lowest, this);
-		pm.registerEvent(Event.Type.PLAYER_JOIN, playerListener, Priority.Lowest, this);
-		pm.registerEvent(Event.Type.PLAYER_QUIT, playerListener, Priority.Lowest, this);
-		pm.registerEvent(Event.Type.PLAYER_KICK, playerListener, Priority.Lowest, this);
+		pm.registerEvent(Type.PLAYER_COMMAND_PREPROCESS, playerListener, Priority.Lowest, this);
+		pm.registerEvent(Type.PLAYER_CHAT, playerListener, Priority.Lowest, this);
+		pm.registerEvent(Type.PLAYER_JOIN, playerListener, Priority.Lowest, this);
+		pm.registerEvent(Type.PLAYER_QUIT, playerListener, Priority.Lowest, this);
+		pm.registerEvent(Type.PLAYER_KICK, playerListener, Priority.Lowest, this);
 		
 		setupPermissions();
 		
@@ -46,7 +46,6 @@ public class nChat extends JavaPlugin {
 		
 		//Register commands
 		getCommand("nchat").setExecutor(new nChatCommand(this));
-		getCommand("me").setExecutor(new MeCommand(this));
 		
 		//Print that the plugin has been enabled!
 		System.out.println("nChat version " + getDescription().getVersion() + " is enabled!");
