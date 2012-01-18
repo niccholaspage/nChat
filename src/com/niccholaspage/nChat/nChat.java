@@ -19,7 +19,6 @@ import com.niccholaspage.nChat.api.PlayerChatFormatEvent;
 import com.niccholaspage.nChat.commands.*;
 
 public class nChat extends JavaPlugin {
-	private final nChatPlayerListener playerListener = new nChatPlayerListener(this);
 	//Permissions Handler
 	private PermissionsHandler permissionsHandler;
 	//Config Handler
@@ -31,6 +30,10 @@ public class nChat extends JavaPlugin {
 	}
 	
 	public void onEnable() {
+		nChatPlayerListener playerListener = new nChatPlayerListener(this);
+		
+		nChatServerListener serverListener = new nChatServerListener(this);
+		
 		PluginManager pm = getServer().getPluginManager();
 		
 		//Register events (like a boss)
@@ -39,6 +42,7 @@ public class nChat extends JavaPlugin {
 		pm.registerEvent(Type.PLAYER_JOIN, playerListener, Priority.Lowest, this);
 		pm.registerEvent(Type.PLAYER_QUIT, playerListener, Priority.Lowest, this);
 		pm.registerEvent(Type.PLAYER_KICK, playerListener, Priority.Lowest, this);
+		pm.registerEvent(Type.SERVER_COMMAND, serverListener, Priority.Lowest, this);
 		
 		setupPermissions();
 		
