@@ -83,7 +83,7 @@ public class nChat extends JavaPlugin {
 				permissionsHandler = new Permissions2Handler(permissions);
 			}
 		}else {
-			permissionsHandler = new DinnerPermissionsHandler();
+			permissionsHandler = new DinnerPermissionsHandler(this);
 		}
 	}
 	
