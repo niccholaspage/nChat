@@ -23,6 +23,8 @@ public class nChat extends JavaPlugin {
 	private PermissionsHandler permissionsHandler;
 	//Config Handler
 	private ConfigHandler configHandler;
+	//Metrics
+	private Metrics metrics;
 	
 	public void onDisable() {
 		System.out.println("nChat Disabled");
@@ -50,6 +52,15 @@ public class nChat extends JavaPlugin {
 		
 		//Register commands
 		getCommand("nchat").setExecutor(new nChatCommand(this));
+		
+		//Metrics
+		try {
+			metrics = new Metrics();
+			
+			metrics.beginMeasuringPlugin(this);
+		} catch (IOException e) {
+			
+		}
 		
 		//Print that the plugin has been enabled!
 		System.out.println("nChat version " + getDescription().getVersion() + " is enabled!");
@@ -167,6 +178,10 @@ public class nChat extends JavaPlugin {
 	
 	public PermissionsHandler getPermissionsHandler(){
 		return permissionsHandler;
+	}
+	
+	public Metrics getMetrics(){
+		return metrics;
 	}
 
 	public String replaceSplit(String str, String[] search, String[] replace) {
