@@ -15,15 +15,22 @@ public class nChatCommand implements CommandExecutor {
 	}
 	
 	public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args){
+		boolean reloadPermission = plugin.getPermissionsHandler().hasPermission(sender, "nChat.reload");
+		
 		if (args.length < 1){
 			if (!plugin.getPermissionsHandler().hasPermission(sender, "nChat.version")) return true;
 			
 			sender.sendMessage(ChatColor.BLUE + "nChat " + plugin.getDescription().getVersion() + " by niccholaspage");
+			
+			if (reloadPermission){
+				sender.sendMessage(ChatColor.BLUE + "Type /nChat reload to reload the configuration");
+			}
+			
 			return true;
 		}
 		
 		if (args[0].equalsIgnoreCase("reload")){
-			if (!plugin.getPermissionsHandler().hasPermission(sender, "nChat.reload")) return true;
+			if (reloadPermission) return true;
 			
 			plugin.loadConfig();
 			
