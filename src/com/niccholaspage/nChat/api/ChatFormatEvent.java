@@ -4,9 +4,12 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.bukkit.event.Event;
+import org.bukkit.event.HandlerList;
 
 @SuppressWarnings("serial")
 public class ChatFormatEvent extends Event {
+	private static final HandlerList handlers = new HandlerList();
+	
 	private final Set<Node> nodes;
 	
 	public ChatFormatEvent() {
@@ -31,5 +34,13 @@ public class ChatFormatEvent extends Event {
 	
 	public Set<Node> getNodes(){
 		return nodes;
+	}
+	 
+	public HandlerList getHandlers() {
+	    return handlers;
+	}
+	 
+	public static HandlerList getHandlerList() {
+	    return handlers;
 	}
 }

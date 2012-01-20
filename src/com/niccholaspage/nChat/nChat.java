@@ -6,10 +6,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import org.bukkit.entity.Player;
-import org.bukkit.event.Event.Priority;
-import org.bukkit.event.Event.Type;
 import org.bukkit.plugin.Plugin;
-import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.niccholaspage.nChat.permissions.*;
@@ -32,19 +29,9 @@ public class nChat extends JavaPlugin {
 	}
 	
 	public void onEnable() {
-		nChatPlayerListener playerListener = new nChatPlayerListener(this);
+		new nChatPlayerListener(this);
 		
-		nChatServerListener serverListener = new nChatServerListener(this);
-		
-		PluginManager pm = getServer().getPluginManager();
-		
-		//Register events (like a boss)
-		pm.registerEvent(Type.PLAYER_COMMAND_PREPROCESS, playerListener, Priority.Lowest, this);
-		pm.registerEvent(Type.PLAYER_CHAT, playerListener, Priority.Lowest, this);
-		pm.registerEvent(Type.PLAYER_JOIN, playerListener, Priority.Lowest, this);
-		pm.registerEvent(Type.PLAYER_QUIT, playerListener, Priority.Lowest, this);
-		pm.registerEvent(Type.PLAYER_KICK, playerListener, Priority.Lowest, this);
-		pm.registerEvent(Type.SERVER_COMMAND, serverListener, Priority.Lowest, this);
+		new nChatServerListener(this);
 		
 		setupPermissions();
 		

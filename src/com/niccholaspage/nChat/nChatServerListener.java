@@ -1,15 +1,20 @@
 package com.niccholaspage.nChat;
 
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
+import org.bukkit.event.Listener;
 import org.bukkit.event.server.ServerCommandEvent;
-import org.bukkit.event.server.ServerListener;
 
-public class nChatServerListener extends ServerListener {
+public class nChatServerListener implements Listener {
 	private final nChat plugin;
 	
 	public nChatServerListener(nChat plugin){
 		this.plugin = plugin;
+		
+		plugin.getServer().getPluginManager().registerEvents(this, plugin);
 	}
 	
+	@EventHandler(priority = EventPriority.LOWEST)
 	public void onServerCommand(ServerCommandEvent event){
 		String command = event.getCommand();
 		
