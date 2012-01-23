@@ -59,11 +59,15 @@ public class nChat extends JavaPlugin {
 		
 		Plugin PEX = getServer().getPluginManager().getPlugin("PermissionsEx");
 		
+		Plugin bPermissions = getServer().getPluginManager().getPlugin("bPermissions");
+		
 		if(PEX != null){
 			permissionsHandler = new PermissionsExHandler();
+		}else if (bPermissions != null){
+			permissionsHandler = new bPermissionsHandler();
 		}else if (permissions != null) {
 			String version = permissions.getDescription().getVersion();
-			
+
 			if (version.startsWith("3")){
 				permissionsHandler = new Permissions3Handler(permissions);
 			}else {
