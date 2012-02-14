@@ -131,8 +131,6 @@ public class nChat extends JavaPlugin {
 		
 		String[] replacements = new String[]{displayName, name, group, prefix, suffix, world, time, "\u00A7", message};
 		
-		out = replaceSplit(out, old, replacements);
-		
 		//API time
 		ChatFormatEvent event;
 		
@@ -141,6 +139,8 @@ public class nChat extends JavaPlugin {
 		}else {
 			event = new ChatFormatEvent();
 		}
+		
+		replaceSplit(event, old, replacements);
 		
 		getServer().getPluginManager().callEvent(event);
 		
@@ -175,8 +175,10 @@ public class nChat extends JavaPlugin {
 		return metrics;
 	}
 
-	public String replaceSplit(String str, String[] search, String[] replace) {
-		if (search.length != replace.length) return "";
+	public void replaceSplit(ChatFormatEvent event, String[] search, String[] replace) {
+		if (search.length != replace.length){
+			return;
+		}
 		
 		for (int i = 0; i < search.length; i++){
 			String[] split = search[i].split(",");
@@ -184,10 +186,8 @@ public class nChat extends JavaPlugin {
 			for (int j = 0; j < split.length; j++){
 				if (replace[i] == null) continue;
 				
-				str = str.replace(split[j], replace[i]);
+				event.getNode(split[j]).setValue(replace[i]);
 			}
 		}
-		
-		return str;
 	}
 }
