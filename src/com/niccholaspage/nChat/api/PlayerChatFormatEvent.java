@@ -2,7 +2,6 @@ package com.niccholaspage.nChat.api;
 
 import org.bukkit.entity.Player;
 
-@SuppressWarnings("serial")
 public class PlayerChatFormatEvent extends ChatFormatEvent {
 	private final Player player;
 

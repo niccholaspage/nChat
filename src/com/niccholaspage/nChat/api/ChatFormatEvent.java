@@ -6,15 +6,12 @@ import java.util.Set;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 
-@SuppressWarnings("serial")
 public class ChatFormatEvent extends Event {
 	private static final HandlerList handlers = new HandlerList();
 	
 	private final Set<Node> nodes;
 	
-	public ChatFormatEvent() {
-		super("ChatFormatEvent");
-		
+	public ChatFormatEvent(){
 		this.nodes = new HashSet<Node>();
 	}
 	
