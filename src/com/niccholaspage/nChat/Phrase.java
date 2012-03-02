@@ -5,10 +5,14 @@ public enum Phrase {
 	NCHAT_CONFIG_RELOAD_HOW_TO("Type /nChat reload to reload the configuration"),
 	NCHAT_CONFIG_RELOADED("The nChat configuration has been reloaded.");
 
+	private String defaultMessage;
+	
 	private String message;
 
-	private Phrase(String message){
-		this.message = message;
+	private Phrase(String defaultMessage){
+		this.defaultMessage = defaultMessage;
+		
+		message = defaultMessage + "";
 	}
 
 	public void setMessage(String message){
@@ -17,6 +21,10 @@ public enum Phrase {
 
 	private String getMessage(){
 		return message;
+	}
+	
+	public void reset(){
+		message = defaultMessage + "";
 	}
 	
 	public String getConfigName(){

@@ -70,6 +70,10 @@ public class ConfigHandler {
 		
 		leaveMessage = config.getString("leavemessage");
 		
+		for (Phrase phrase : Phrase.values()){
+			phrase.reset();
+		}
+		
 		if (!phrasesFile.exists()){
 			return;
 		}
