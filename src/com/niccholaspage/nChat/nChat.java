@@ -107,6 +107,8 @@ public class nChat extends JavaPlugin {
 		
 		String time = dateFormat.format(now);
 		
+		out = out.replace("&", "\u00A7");
+		
 		String[] old = new String[]{"name", "rname", "group", "prefix", "suffix", "world", "timestamp", "message"};
 		
 		String[] replacements = new String[]{displayName, name, group, prefix, suffix, world, time, message};
