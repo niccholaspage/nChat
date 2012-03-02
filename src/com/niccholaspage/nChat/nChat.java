@@ -107,9 +107,9 @@ public class nChat extends JavaPlugin {
 		
 		String time = dateFormat.format(now);
 		
-		String[] old = new String[]{"+name", "+rname", "+group", "+prefix", "+suffix", "+world", "+timestamp", "&", "+message"};
+		String[] old = new String[]{"name", "rname", "group", "prefix", "suffix", "world", "timestamp", "message"};
 		
-		String[] replacements = new String[]{displayName, name, group, prefix, suffix, world, time, "\u00A7", message};
+		String[] replacements = new String[]{displayName, name, group, prefix, suffix, world, time, message};
 		
 		//API time
 		ChatFormatEvent event;
@@ -133,7 +133,7 @@ public class nChat extends JavaPlugin {
 		}
 		
 		if (player != null){
-			if ((permissionsHandler.hasPermission(player, "nChat.colors")) || (permissionsHandler.hasPermission(player, "nChat.colours"))) {
+			if (permissionsHandler.hasPermission(player, "nChat.colors") || permissionsHandler.hasPermission(player, "nChat.colours")) {
 				out = out.replace(configHandler.getColorCharacter(), "\u00A7");
 			}
 		}
