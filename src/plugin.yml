@@ -2,9 +2,9 @@ name: nChat
 
 main: com.niccholaspage.nChat.nChat
 
-version: "${project.version}"
+version: 0.8
 
 commands:
   nchat:
-    usage:
-    description:
+    usage: /nChat
+    description: Allows you to view nChat's version and reload the configuration

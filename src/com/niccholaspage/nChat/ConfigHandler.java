@@ -68,6 +68,10 @@ public class ConfigHandler {
 		
 		ConfigurationSection configurationSection = config.getConfigurationSection("phrases");
 		
+		if (configurationSection == null){
+			return;
+		}
+		
 		Set<String> keys = configurationSection.getKeys(false);
 		
 		for (Phrase phrase : Phrase.values()){
