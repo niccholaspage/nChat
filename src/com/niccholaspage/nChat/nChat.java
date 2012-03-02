@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.logging.Logger;
 
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
@@ -17,22 +16,12 @@ import com.niccholaspage.nChat.api.PlayerChatFormatEvent;
 import com.niccholaspage.nChat.commands.*;
 
 public class nChat extends JavaPlugin {
-	//Logging
-	private Logger log;
 	//Permissions Handler
 	private PermissionsHandler permissionsHandler;
 	//Config Handler
 	private ConfigHandler configHandler;
-	//Metrics
-	private Metrics metrics;
-	
-	public void onDisable(){
-		log.info(Phrase.DISABLED.parse(getDescription().getVersion()));
-	}
 	
 	public void onEnable(){
-		log = getServer().getLogger();
-		
 		new nChatPlayerListener(this);
 		
 		new nChatServerListener(this);
@@ -43,19 +32,6 @@ public class nChat extends JavaPlugin {
 		
 		//Register commands
 		getCommand("nchat").setExecutor(new nChatCommand(this));
-		
-		//Metrics
-		try {
-			metrics = new Metrics();
-			
-			metrics.beginMeasuringPlugin(this);
-		} catch (IOException e) {
-			
-		}
-		
-		//Print that the plugin has been enabled!
-		log.info(Phrase.ENABLED.parse(getDescription().getVersion()));
-
 	}
 	
 	private void setupPermissions(){
@@ -173,10 +149,6 @@ public class nChat extends JavaPlugin {
 	
 	public PermissionsHandler getPermissionsHandler(){
 		return permissionsHandler;
-	}
-	
-	public Metrics getMetrics(){
-		return metrics;
 	}
 
 	public void replaceSplit(ChatFormatEvent event, String[] search, String[] replace) {
