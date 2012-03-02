@@ -1,7 +1,7 @@
 package com.niccholaspage.nChat;
 
 public enum Phrase {
-	NCHAT_COMMAND_CREDIT("nChat $0 by niccholaspage"),
+	NCHAT_COMMAND_CREDIT("nChat $1 by niccholaspage"),
 	NCHAT_CONFIG_RELOAD_HOW_TO("Type /nChat reload to reload the configuration"),
 	NCHAT_CONFIG_RELOADED("The nChat configuration has been reloaded.");
 
