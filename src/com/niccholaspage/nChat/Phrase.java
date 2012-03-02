@@ -18,7 +18,11 @@ public enum Phrase {
 	private String getMessage(){
 		return message;
 	}
-
+	
+	public String getConfigName(){
+		return name().toLowerCase();
+	}
+	
 	public String parse(String... params){
 		String parsedMessage = getMessage();
 

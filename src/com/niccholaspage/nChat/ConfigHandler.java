@@ -2,6 +2,7 @@ package com.niccholaspage.nChat;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Set;
 
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -64,6 +65,18 @@ public class ConfigHandler {
 		joinMessage = config.getString("joinmessage");
 		
 		leaveMessage = config.getString("leavemessage");
+		
+		ConfigurationSection configurationSection = config.getConfigurationSection("phrases");
+		
+		Set<String> keys = configurationSection.getKeys(false);
+		
+		for (Phrase phrase : Phrase.values()){
+			String phraseConfigName = phrase.getConfigName();
+			
+			if (keys.contains(phraseConfigName)){
+				phrase.setMessage(configurationSection.getString(phraseConfigName));
+			}
+		}
 	}
 	
 	private YamlConfiguration getDefaultConfig(){
