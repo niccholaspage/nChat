@@ -76,19 +76,13 @@ public class ConfigHandler {
 		
 		YamlConfiguration phrasesConfig = YamlConfiguration.loadConfiguration(phrasesFile);
 		
-		ConfigurationSection configurationSection = phrasesConfig.getConfigurationSection("phrases");
-		
-		if (configurationSection == null){
-			return;
-		}
-		
-		Set<String> keys = configurationSection.getKeys(false);
+		Set<String> keys = phrasesConfig.getKeys(false);
 		
 		for (Phrase phrase : Phrase.values()){
 			String phraseConfigName = phrase.getConfigName();
 			
 			if (keys.contains(phraseConfigName)){
-				phrase.setMessage(configurationSection.getString(phraseConfigName));
+				phrase.setMessage(phrasesConfig.getString(phraseConfigName));
 			}
 		}
 	}
