@@ -8,9 +8,11 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 public class ConfigHandler {
-	private File configFile;
+	private final File configFile;
 	
-	private YamlConfiguration config;
+	private final File phrasesFile;
+	
+	private final YamlConfiguration config;
 	
 	private String messageFormat;
 	
@@ -24,8 +26,10 @@ public class ConfigHandler {
 	
 	private String leaveMessage;
 	
-	public ConfigHandler(File configFile){
+	public ConfigHandler(File configFile, File phrasesFile){
 		this.configFile = configFile;
+		
+		this.phrasesFile = phrasesFile;
 		
 		this.config = YamlConfiguration.loadConfiguration(configFile);
 		
@@ -66,7 +70,13 @@ public class ConfigHandler {
 		
 		leaveMessage = config.getString("leavemessage");
 		
-		ConfigurationSection configurationSection = config.getConfigurationSection("phrases");
+		if (!phrasesFile.exists()){
+			return;
+		}
+		
+		YamlConfiguration phrasesConfig = YamlConfiguration.loadConfiguration(phrasesFile);
+		
+		ConfigurationSection configurationSection = phrasesConfig.getConfigurationSection("phrases");
 		
 		if (configurationSection == null){
 			return;

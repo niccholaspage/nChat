@@ -67,7 +67,9 @@ public class nChat extends JavaPlugin {
 			e.printStackTrace();
 		}
 		
-		configHandler = new ConfigHandler(configFile);
+		File phrasesFile = new File(getDataFolder(), "phrases.yml");
+		
+		configHandler = new ConfigHandler(configFile, phrasesFile);
 	}
 	
 	public String formatMessage(Player player, String out, String message){
