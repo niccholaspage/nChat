@@ -29,7 +29,7 @@
     <!-- Continuous integration -->
     <ciManagement>
         <system>jenkins</system>
-        <url>http://ci.craftfire.com</url>
+        <url>http://ci.spout.org</url>
     </ciManagement>
 
     <!-- Repository locations -->
