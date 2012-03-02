@@ -34,24 +34,21 @@
 
     <!-- Repository locations -->
     <repositories>
-        <repository>
-            <id>craftfire-repo</id>
-            <url>http://repo.craftfire.com</url>
-        </repository>
-        <repository>
-            <id>craftfire-dbrepo</id>
-            <url>http://db.craftfire.com/repo</url>
-        </repository>
+    	<repository>
+    		<id>spout-repo</id>
+    		<url>http://repo.spout.org</url>
+    	</repository>
     </repositories>
 
     <!-- Dependencies -->
     <dependencies>
         <!-- Bukkit -->
-        <dependency>
-            <groupId>org.bukkit</groupId>
-            <artifactId>bukkit</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-        </dependency>
+	   <dependency>
+		   <groupId>org.bukkit</groupId>
+		   <artifactId>bukkit</artifactId>
+		   <version>${bukkit.version}</version>
+		   <scope>provided</scope>
+	    </dependency>
         <!-- Third-party plugins -->
         <dependency>
             <groupId>com.nijikokun.bukkit</groupId>
