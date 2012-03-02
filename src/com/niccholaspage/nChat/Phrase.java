@@ -1,8 +1,6 @@
 package com.niccholaspage.nChat;
 
 public enum Phrase {
-	ENABLED("nChat $0 is now enabled."),
-	DISABLED("nChat $0 is now disabled."),
 	NCHAT_COMMAND_CREDIT("nChat $0 by niccholaspage"),
 	NCHAT_CONFIG_RELOAD_HOW_TO("Type /nChat reload to reload the configuration"),
 	NCHAT_CONFIG_RELOADED("The nChat configuration has been reloaded.");
