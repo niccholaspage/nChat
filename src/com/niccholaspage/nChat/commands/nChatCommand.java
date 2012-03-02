@@ -31,7 +31,9 @@ public class nChatCommand implements CommandExecutor {
 		}
 		
 		if (args[0].equalsIgnoreCase("reload")){
-			if (reloadPermission) return true;
+			if (!reloadPermission){
+				return true;
+			}
 			
 			plugin.loadConfig();
 			
