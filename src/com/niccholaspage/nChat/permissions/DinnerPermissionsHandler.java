@@ -2,6 +2,7 @@ package com.niccholaspage.nChat.permissions;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Map;
 
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -35,35 +36,27 @@ public class DinnerPermissionsHandler implements PermissionsHandler {
 		return "Not Supported";
 	}
 	
-	public String getPrefix(String name, String world) {
+	private String getInfo(String name, String world, String value, Map<String, String> map){
 		Player player = plugin.getServer().getPlayer(name);
 		
 		if (player == null){
 			return "Invalid Player";
 		}
 		
-		for (String prefix : configHandler.getPrefixes().keySet()){
-			if (hasPermission(player, "nChat.info." + prefix)){
-				return configHandler.getPrefixes().get(prefix);
+		for (String loop : map.keySet()){
+			if (hasPermission(player, "nChat.info." + value)){
+				return map.get(loop);
 			}
 		}
 		
 		return "Not Found";
 	}
 	
-	public String getSuffix(String name, String world) {
-		Player player = plugin.getServer().getPlayer(name);
-		
-		if (player == null){
-			return "Invalid Player";
-		}
-		
-		for (String suffix : configHandler.getSuffixes().keySet()){
-			if (hasPermission(player, "nChat.info." + suffix)){
-				return configHandler.getSuffixes().get(suffix);
-			}
-		}
-		
-		return "Not Found";
+	public String getPrefix(String name, String world){
+		return getInfo(name, world, "prefix", configHandler.getPrefixes());
+	}
+	
+	public String getSuffix(String name, String world){
+		return getInfo(name, world, "suffix", configHandler.getSuffixes());
 	}
 }

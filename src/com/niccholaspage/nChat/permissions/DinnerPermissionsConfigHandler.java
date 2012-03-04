@@ -38,28 +38,22 @@ public class DinnerPermissionsConfigHandler {
 		
 		ConfigurationSection prefixesSection = config.getConfigurationSection("prefixes");
 		
-		prefixes = new HashMap<String, String>();
-		
-		if (prefixesSection != null){
-			for (String key : prefixesSection.getKeys(false)){
-				String value = prefixesSection.getString(key);
-				
-				if (value != null){
-					prefixes.put(key, value);
-				}
-			}
-		}
+		initInfo(prefixes, prefixesSection);
 		
 		ConfigurationSection suffixesSection = config.getConfigurationSection("suffixes");
 		
-		suffixes = new HashMap<String, String>();
+		initInfo(suffixes, suffixesSection);
+	}
+	
+	private void initInfo(Map<String, String> map, ConfigurationSection section){
+		map = new HashMap<String, String>();
 		
-		if (suffixesSection != null){
-			for (String key : suffixesSection.getKeys(false)){
-				String value = suffixesSection.getString(key);
+		if (section != null){
+			for (String key : section.getKeys(false)){
+				String value = section.getString(key);
 				
 				if (value != null){
-					suffixes.put(key, value);
+					prefixes.put(key, value);
 				}
 			}
 		}
