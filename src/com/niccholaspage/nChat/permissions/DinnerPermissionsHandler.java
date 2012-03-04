@@ -44,7 +44,7 @@ public class DinnerPermissionsHandler implements PermissionsHandler {
 		}
 		
 		for (String loop : map.keySet()){
-			if (hasPermission(player, "nChat.info." + value)){
+			if (hasPermission(player, "nChat.info." + loop)){
 				return map.get(loop);
 			}
 		}
