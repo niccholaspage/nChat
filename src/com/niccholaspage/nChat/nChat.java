@@ -76,74 +76,72 @@ public class nChat extends JavaPlugin {
 		if (out == null || out == ""){
 			return null;
 		}
-		
+
 		String name = "";
-		
+
 		String displayName = "";
-		
+
 		String world = "";
-		
+
 		String group = "";
-		
+
 		String prefix = "";
-		
+
 		String suffix = "";
-		
+
 		if (player != null){
 			name = player.getName();
-			
+
 			displayName = player.getDisplayName();
-			
+
 			world = player.getWorld().getName();
-			
+
 			group = permissionsHandler.getGroup(name, world);
-			
+
 			prefix = permissionsHandler.getPrefix(name, world);
-			
+
 			suffix = permissionsHandler.getSuffix(name, world);
 		}
-		
+
 		Date now = new Date();
-		
+
 		SimpleDateFormat dateFormat = new SimpleDateFormat(configHandler.getTimestampFormat());
-		
+
 		String time = dateFormat.format(now);
-		
-		out = out.replace("&", "\u00A7");
-		
-		String[] old = new String[]{"name", "rname", "group", "prefix", "suffix", "world", "timestamp", "message"};
-		
-		String[] replacements = new String[]{displayName, name, group, prefix, suffix, world, time, message};
-		
+
+		String[] old = new String[]{"+name", "+rname", "+group", "+prefix", "+suffix", "+world", "+timestamp", "&", "+message"};
+
+		String[] replacements = new String[]{displayName, name, group, prefix, suffix, world, time, "\u00A7", message};
+
+		out = replaceSplit(out, old, replacements);
+
 		//API time
 		ChatFormatEvent event;
-		
+
 		if (player != null){
 			event = new PlayerChatFormatEvent(player);
 		}else {
 			event = new ChatFormatEvent();
 		}
-		
-		replaceSplit(event, old, replacements);
-		
+
 		getServer().getPluginManager().callEvent(event);
-		
+
 		for (Node node : event.getNodes()){
 			if (node.getValue() == null){
 				continue;
 			}
-			
+
 			out = out.replace("+" + node.getName(), node.getValue());
 		}
-		
+
 		if (player != null){
-			if (permissionsHandler.hasPermission(player, "nChat.colors") || permissionsHandler.hasPermission(player, "nChat.colours")) {
+			if ((permissionsHandler.hasPermission(player, "nChat.colors")) || (permissionsHandler.hasPermission(player, "nChat.colours"))) {
 				out = out.replace(configHandler.getColorCharacter(), "\u00A7");
 			}
 		}
-		
+
 		out = out.replaceAll("%", "%%");
-		
+
 		return out;
 	}
 	
@@ -155,19 +153,21 @@ public class nChat extends JavaPlugin {
 		return permissionsHandler;
 	}
 
-	public void replaceSplit(ChatFormatEvent event, String[] search, String[] replace) {
+	public String replaceSplit(String str, String[] search, String[] replace){
 		if (search.length != replace.length){
-			return;
+			return "";
 		}
-		
+
 		for (int i = 0; i < search.length; i++){
 			String[] split = search[i].split(",");
-			
+
 			for (int j = 0; j < split.length; j++){
 				if (replace[i] == null) continue;
-				
-				event.getNode(split[j]).setValue(replace[i]);
+
+				str = str.replace(split[j], replace[i]);
 			}
 		}
+
+		return str;
 	}
 }
