@@ -64,8 +64,6 @@ public class DinnerPermissionsConfigHandler {
 		
 		defaultConfig.set("prefixes.admin", "Admin");
 		
-		defaultConfig.set("suffixes.admin", "Example");
-		
 		return defaultConfig;
 	}
 	
