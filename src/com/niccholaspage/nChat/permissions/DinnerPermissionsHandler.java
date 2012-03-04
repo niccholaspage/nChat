@@ -12,20 +12,10 @@ import com.niccholaspage.nChat.nChat;
 public class DinnerPermissionsHandler implements PermissionsHandler {
 	private final nChat plugin;
 	
-	private final DinnerPermissionsConfigHandler configHandler;
+	private DinnerPermissionsConfigHandler configHandler;
 	
 	public DinnerPermissionsHandler(nChat plugin){
 		this.plugin = plugin;
-		
-		File configFile = new File(plugin.getDataFolder(), "info.yml");
-
-		try {
-			configFile.createNewFile();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		
-		configHandler = new DinnerPermissionsConfigHandler(configFile);
 	}
 	
 	public boolean hasPermission(CommandSender sender, String permission) {
@@ -58,5 +48,17 @@ public class DinnerPermissionsHandler implements PermissionsHandler {
 	
 	public String getSuffix(String name, String world){
 		return getInfo(name, world, "suffix", configHandler.getSuffixes());
+	}
+	
+	public void reload(){
+		File configFile = new File(plugin.getDataFolder(), "info.yml");
+
+		try {
+			configFile.createNewFile();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		configHandler = new DinnerPermissionsConfigHandler(configFile);
 	}
 }

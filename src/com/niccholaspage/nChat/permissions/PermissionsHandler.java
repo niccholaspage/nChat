@@ -10,4 +10,6 @@ public interface PermissionsHandler {
 	public String getPrefix(String name, String world);
 	
 	public String getSuffix(String name, String world);
+	
+	public void reload();
 }

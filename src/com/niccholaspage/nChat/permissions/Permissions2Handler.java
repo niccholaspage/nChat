@@ -57,4 +57,8 @@ public class Permissions2Handler implements PermissionsHandler {
 		
 		return suffix;
 	}
+	
+	public void reload(){
+		
+	}
 }

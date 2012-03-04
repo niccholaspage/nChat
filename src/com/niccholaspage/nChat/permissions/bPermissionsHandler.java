@@ -28,5 +28,8 @@ public class bPermissionsHandler implements PermissionsHandler {
 	public String getSuffix(String name, String world){
 		return ApiLayer.getValue(world, CalculableType.USER, name, "suffix");
 	}
-
+	
+	public void reload(){
+		
+	}
 }

@@ -34,4 +34,8 @@ public class PermissionsExHandler implements PermissionsHandler {
 	public String getSuffix(String name, String world){
 		return pexHandler.getUser(name).getOption("suffix");
 	}
+	
+	public void reload(){
+		
+	}
 }

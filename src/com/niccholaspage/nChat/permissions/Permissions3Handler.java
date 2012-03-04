@@ -35,4 +35,8 @@ public class Permissions3Handler implements PermissionsHandler {
 	public String getSuffix(String name, String world) {
 		return p3Handler.getUserSuffix(world, name);
 	}
+	
+	public void reload(){
+		
+	}
 }

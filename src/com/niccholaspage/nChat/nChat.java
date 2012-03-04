@@ -70,6 +70,8 @@ public class nChat extends JavaPlugin {
 		File phrasesFile = new File(getDataFolder(), "phrases.yml");
 		
 		configHandler = new ConfigHandler(configFile, phrasesFile);
+		
+		permissionsHandler.reload();
 	}
 	
 	public String formatMessage(Player player, String out, String message){
