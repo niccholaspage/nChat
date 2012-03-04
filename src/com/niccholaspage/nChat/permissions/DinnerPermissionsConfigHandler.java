@@ -62,8 +62,6 @@ public class DinnerPermissionsConfigHandler {
 	private YamlConfiguration getDefaultConfig(){
 		YamlConfiguration defaultConfig = new YamlConfiguration();
 		
-		defaultConfig.set("prefixes.admin", "Admin");
-		
 		return defaultConfig;
 	}
 	
