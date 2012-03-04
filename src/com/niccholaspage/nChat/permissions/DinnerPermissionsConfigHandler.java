@@ -38,15 +38,15 @@ public class DinnerPermissionsConfigHandler {
 		
 		ConfigurationSection prefixesSection = config.getConfigurationSection("prefixes");
 		
-		initInfo(prefixes, prefixesSection);
+		prefixes = initInfo(prefixesSection);
 		
 		ConfigurationSection suffixesSection = config.getConfigurationSection("suffixes");
 		
-		initInfo(suffixes, suffixesSection);
+		suffixes = initInfo(suffixesSection);
 	}
 	
-	private void initInfo(Map<String, String> map, ConfigurationSection section){
-		map = new HashMap<String, String>();
+	private Map<String, String> initInfo(ConfigurationSection section){
+		Map<String, String> map = new HashMap<String, String>();
 		
 		if (section != null){
 			for (String key : section.getKeys(false)){
@@ -57,6 +57,8 @@ public class DinnerPermissionsConfigHandler {
 				}
 			}
 		}
+		
+		return map;
 	}
 	
 	private YamlConfiguration getDefaultConfig(){
