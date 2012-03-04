@@ -53,7 +53,7 @@ public class DinnerPermissionsConfigHandler {
 				String value = section.getString(key);
 				
 				if (value != null){
-					prefixes.put(key, value);
+					map.put(key, value);
 				}
 			}
 		}
