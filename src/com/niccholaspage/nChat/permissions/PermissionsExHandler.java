@@ -28,11 +28,11 @@ public class PermissionsExHandler implements PermissionsHandler {
 	}
 	
 	public String getPrefix(String name, String world){
-		return pexHandler.getUser(name).getOption("prefix");
+		return pexHandler.getUser(name).getPrefix(world);
 	}
 	
 	public String getSuffix(String name, String world){
-		return pexHandler.getUser(name).getOption("suffix");
+		return pexHandler.getUser(name).getSuffix(world);
 	}
 	
 	public void reload(){
