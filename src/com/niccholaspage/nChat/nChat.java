@@ -28,6 +28,8 @@ public class nChat extends JavaPlugin {
 		
 		setupPermissions();
 		
+		getDataFolder().mkdirs();
+		
 		loadConfig();
 		
 		//Register commands
