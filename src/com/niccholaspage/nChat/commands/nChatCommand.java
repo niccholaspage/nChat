@@ -24,7 +24,7 @@ public class nChatCommand implements CommandExecutor {
 			sender.sendMessage(ChatColor.BLUE + Phrase.NCHAT_COMMAND_CREDIT.parse(plugin.getDescription().getVersion()));
 			
 			if (reloadPermission){
-				sender.sendMessage(ChatColor.BLUE + Phrase.NCHAT_CONFIG_RELOAD_HOW_TO.parse());
+				sender.sendMessage(ChatColor.BLUE + Phrase.NCHAT_CONFIG_RELOAD_HOW_TO.parse(cmd.getName()));
 			}
 			
 			return true;
