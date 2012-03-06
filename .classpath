@@ -6,5 +6,6 @@
 	<classpathentry kind="lib" path="/Users/niccholaspage/Documents/Bukkit JARS/Permissions.jar"/>
 	<classpathentry kind="lib" path="/Users/niccholaspage/Documents/Bukkit JARS/PermissionsEx.jar"/>
 	<classpathentry kind="lib" path="/Users/niccholaspage/Documents/Bukkit JARS/bPermissions.jar"/>
+	<classpathentry kind="lib" path="/Users/niccholaspage/Documents/Bukkit JARS/EssentialsGroupManager.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
