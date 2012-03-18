@@ -37,8 +37,6 @@ public class nChat extends JavaPlugin {
 	}
 	
 	private void setupPermissions(){
-		Plugin permissions = getServer().getPluginManager().getPlugin("Permissions");
-		
 		Plugin PEX = getServer().getPluginManager().getPlugin("PermissionsEx");
 		
 		Plugin bPermissions = getServer().getPluginManager().getPlugin("bPermissions");
@@ -51,14 +49,6 @@ public class nChat extends JavaPlugin {
 			permissionsHandler = new bPermissionsHandler();
 		}else if (groupManager != null){
 			permissionsHandler = new GroupManagerHandler(this, groupManager);
-		}else if (permissions != null) {
-			String version = permissions.getDescription().getVersion();
-
-			if (version.startsWith("3")){
-				permissionsHandler = new Permissions3Handler(permissions);
-			}else {
-				permissionsHandler = new Permissions2Handler(permissions);
-			}
 		}else {
 			permissionsHandler = new DinnerPermissionsHandler(this);
 		}
