@@ -36,9 +36,9 @@ public class GroupManagerHandler implements PermissionsHandler {
 	}
 	
 	private AnjoPermissionsHandler getHandler(Player player){
-		AnjoPermissionsHandler handler = handlers.get(player);
-		
 		cleanupHandlers();
+		
+		AnjoPermissionsHandler handler = handlers.get(player);
 		
 		if (handler == null){
 			handler = groupManager.getWorldsHolder().getWorldPermissions(player);

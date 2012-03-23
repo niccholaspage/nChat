@@ -12,6 +12,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import com.niccholaspage.nChat.permissions.*;
 import com.niccholaspage.nChat.api.ChatFormatEvent;
 import com.niccholaspage.nChat.api.Node;
+import com.niccholaspage.nChat.api.PermissionsHandlerEnabledEvent;
 import com.niccholaspage.nChat.api.PlayerChatFormatEvent;
 import com.niccholaspage.nChat.commands.*;
 
@@ -37,6 +38,16 @@ public class nChat extends JavaPlugin {
 	}
 	
 	private void setupPermissions(){
+		PermissionsHandlerEnabledEvent event = new PermissionsHandlerEnabledEvent();
+		
+		getServer().getPluginManager().callEvent(event);
+		
+		if (event.getPermissionsHandler() != null){
+			permissionsHandler = event.getPermissionsHandler();
+			
+			return;
+		}
+		
 		Plugin PEX = getServer().getPluginManager().getPlugin("PermissionsEx");
 		
 		Plugin bPermissions = getServer().getPluginManager().getPlugin("bPermissions");

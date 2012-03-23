@@ -33,11 +33,11 @@ public class ChatFormatEvent extends Event {
 		return nodes;
 	}
 	 
-	public HandlerList getHandlers() {
+	public HandlerList getHandlers(){
 	    return handlers;
 	}
 	 
-	public static HandlerList getHandlerList() {
+	public static HandlerList getHandlerList(){
 	    return handlers;
 	}
 }
