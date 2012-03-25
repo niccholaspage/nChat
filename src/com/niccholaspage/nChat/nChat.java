@@ -59,7 +59,7 @@ public class nChat extends JavaPlugin {
 		}else if (bPermissions != null){
 			permissionsHandler = new bPermissionsHandler();
 		}else if (groupManager != null){
-			permissionsHandler = new GroupManagerHandler(this, groupManager);
+			permissionsHandler = new GroupManagerHandler(groupManager);
 		}else {
 			permissionsHandler = new DinnerPermissionsHandler(this);
 		}
@@ -85,6 +85,8 @@ public class nChat extends JavaPlugin {
 		if (out == null || out == ""){
 			return null;
 		}
+		
+		PlayerPermissionsHandler handler = null;
 
 		String name = "";
 
@@ -99,17 +101,19 @@ public class nChat extends JavaPlugin {
 		String suffix = "";
 
 		if (player != null){
+			handler = permissionsHandler.getPlayerPermissionsHandler(player);
+			
 			name = player.getName();
 
 			displayName = player.getDisplayName();
 
 			world = player.getWorld().getName();
+			
+			group = handler.getGroup();
 
-			group = permissionsHandler.getGroup(name, world);
+			prefix = handler.getPrefix();
 
-			prefix = permissionsHandler.getPrefix(name, world);
-
-			suffix = permissionsHandler.getSuffix(name, world);
+			suffix = handler.getSuffix();
 		}
 
 		Date now = new Date();

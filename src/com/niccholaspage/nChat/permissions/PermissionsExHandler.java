@@ -23,16 +23,8 @@ public class PermissionsExHandler implements PermissionsHandler {
 		}
 	}
 	
-	public String getGroup(String name, String world){
-		return pexHandler.getUser(name).getGroups(world)[0].getName();
-	}
-	
-	public String getPrefix(String name, String world){
-		return pexHandler.getUser(name).getPrefix(world);
-	}
-	
-	public String getSuffix(String name, String world){
-		return pexHandler.getUser(name).getSuffix(world);
+	public PlayerPermissionsHandler getPlayerPermissionsHandler(Player player){
+		return new PermissionsExPlayerHandler(player, pexHandler.getUser(player));
 	}
 	
 	public void reload(){
