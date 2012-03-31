@@ -1,5 +1,14 @@
 apply plugin: 'java'
 
+sourceCompatibility = 1.5
+version = '0.9-SNAPSHOT'
+
+jar {
+	manfest {
+		attributes 'Implementation-Title': 'nChat', 'Implementation-Version': version
+	}
+}
+
 dependencies {
 	compile fileTree(dir: 'libs', include: '*.jar')
 }
