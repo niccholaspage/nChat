@@ -9,6 +9,17 @@ jar {
 	}
 }
 
+sourceSets {
+	main {
+		java {
+			srcDir 'src/main/java'
+		}
+		resources {
+			srcDir 'src/resources'
+		}
+	}
+}
+
 dependencies {
 	compile fileTree(dir: 'libs', include: '*.jar')
 }
