@@ -17,8 +17,16 @@ public class bPermissionsHandler implements PermissionsHandler {
 		}
 	}
 	
-	public PlayerPermissionsHandler getPlayerPermissionsHandler(Player player){
-		return new bPermissionsPlayerHandler(player);
+	public String getGroup(String name, String world){
+		return ApiLayer.getGroups(world, CalculableType.USER, name)[0];
+	}
+	
+	public String getPrefix(String name, String world){
+		return ApiLayer.getValue(world, CalculableType.USER, name, "prefix");
+	}
+	
+	public String getSuffix(String name, String world){
+		return ApiLayer.getValue(world, CalculableType.USER, name, "suffix");
 	}
 	
 	public void reload(){

@@ -1,12 +1,15 @@
 package com.niccholaspage.nChat.permissions;
 
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
 
 public interface PermissionsHandler {
 	public boolean hasPermission(CommandSender sender, String permission);
 	
-	public PlayerPermissionsHandler getPlayerPermissionsHandler(Player player);
+	public String getGroup(String name, String world);
+	
+	public String getPrefix(String name, String world);
+	
+	public String getSuffix(String name, String world);
 	
 	public void reload();
 }
