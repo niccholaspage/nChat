@@ -20,11 +20,12 @@ sourceSets {
 	}
 }
 
-repositories {
-	flatDir {
-		name: 'fileRepo'
-		dirs 'repo'
-	}
+uploadArchives {
+    repositories {
+       flatDir {
+           dirs 'repos'
+       }
+    }
 }
 
 dependencies {
