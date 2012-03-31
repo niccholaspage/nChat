@@ -20,6 +20,13 @@ sourceSets {
 	}
 }
 
+repositories {
+	flatDir {
+		name: 'fileRepo'
+		dirs 'repo'
+	}
+}
+
 dependencies {
 	compile fileTree(dir: 'libs', include: '*.jar')
 }
