@@ -4,7 +4,7 @@ sourceCompatibility = 1.5
 version = '0.9-SNAPSHOT'
 
 jar {
-	manfest {
+	manifest {
 		attributes 'Implementation-Title': 'nChat', 'Implementation-Version': version
 	}
 }
