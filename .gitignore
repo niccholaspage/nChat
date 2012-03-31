@@ -1,7 +1,8 @@
 settings/
 bin/
 target/
+build/
+.gradle/
 .classpath
 .project
 .DS_Store
-.gradle/
