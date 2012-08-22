@@ -1,8 +1,9 @@
-settings/
+.settings/
 bin/
 target/
 build/
 repos/
+Fe.jar
 .gradle/
 .classpath
 .project
