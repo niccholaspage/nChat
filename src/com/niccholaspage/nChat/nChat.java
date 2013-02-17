@@ -1,11 +1,13 @@
 package com.niccholaspage.nChat;
 
+import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import net.milkbowl.vault.chat.Chat;
 import net.milkbowl.vault.permission.Permission;
 
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -161,5 +163,37 @@ public class nChat extends JavaPlugin {
 		}
 
 		return str;
+	}
+	
+	private void setupPhrases(){
+		File phrasesFile = new File(getDataFolder(), "phrases.yml");
+		
+		for (Phrase phrase : Phrase.values()){
+			phrase.reset();
+		}
+
+		if (!phrasesFile.exists()){
+			return;
+		}
+
+		YamlConfiguration config = YamlConfiguration.loadConfiguration(phrasesFile);
+
+		for (Phrase phrase : Phrase.values()){
+			String phraseConfigName = phrase.getConfigName();
+			
+			String phraseMessage = config.getString(phraseConfigName);
+			
+			if (phraseMessage == null){
+				phraseMessage = phrase.parse();
+			}
+			
+			phrase.setMessage(phraseMessage);
+		}
+	}
+	
+	public void reloadConfig(){
+		setupPhrases();
+		
+		super.reloadConfig();
 	}
 }
