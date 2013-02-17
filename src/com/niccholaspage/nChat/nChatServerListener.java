@@ -18,7 +18,9 @@ public class nChatServerListener implements Listener {
 	public void onServerCommand(ServerCommandEvent event){
 		String command = event.getCommand();
 		
-		if (command == null) return;
+		if (command == null){
+			return;
+		}
 
 		if (command.toLowerCase().startsWith("/me ")){
 			String message = command.substring(command.indexOf(" ")).trim();
