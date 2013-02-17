@@ -38,7 +38,7 @@ public class nChat extends JavaPlugin {
 
 		getDataFolder().mkdirs();
 
-		getConfig().options().copyDefaults();
+		getConfig().options().copyDefaults(true);
 
 		saveConfig();
 
