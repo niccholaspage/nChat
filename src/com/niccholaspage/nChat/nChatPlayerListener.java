@@ -4,7 +4,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerChatEvent;
+import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerKickEvent;
@@ -56,7 +56,7 @@ public class nChatPlayerListener implements Listener {
 	}
 	
 	@EventHandler(priority = EventPriority.LOWEST)
-	public void onPlayerChat(PlayerChatEvent event){
+	public void onPlayerChat(AsyncPlayerChatEvent event){
 		if (event.getMessage().startsWith("/")) return;
 		
 		event.setFormat(plugin.formatMessage(event.getPlayer(), plugin.getAPI().getMessageFormat(), event.getMessage()));
