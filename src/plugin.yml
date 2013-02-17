@@ -8,3 +8,5 @@ commands:
   nChat:
     usage: /<command>
     description: Allows you to view nChat's version and reload the configuration
+
+depend: [Vault]

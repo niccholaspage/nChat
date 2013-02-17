@@ -1,6 +1,5 @@
 package com.niccholaspage.nChat.commands;
 
-import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -16,15 +15,17 @@ public class nChatCommand implements CommandExecutor {
 	}
 	
 	public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args){
-		boolean reloadPermission = plugin.getPermissionsHandler().hasPermission(sender, "nChat.reload");
+		boolean reloadPermission = sender.hasPermission("nChat.reload");
 		
 		if (args.length < 1){
-			if (!plugin.getPermissionsHandler().hasPermission(sender, "nChat.version")) return true;
+			if (!sender.hasPermission("nChat.version")){
+				return true;
+			}
 			
-			sender.sendMessage(ChatColor.BLUE + Phrase.NCHAT_COMMAND_CREDIT.parse(plugin.getDescription().getVersion()));
+			sender.sendMessage(Phrase.NCHAT_COMMAND_CREDIT.parse(plugin.getDescription().getVersion()));
 			
 			if (reloadPermission){
-				sender.sendMessage(ChatColor.BLUE + Phrase.NCHAT_CONFIG_RELOAD_HOW_TO.parse(cmd.getName()));
+				sender.sendMessage(Phrase.NCHAT_CONFIG_RELOAD_HOW_TO.parse(cmd.getName()));
 			}
 			
 			return true;
@@ -35,9 +36,9 @@ public class nChatCommand implements CommandExecutor {
 				return true;
 			}
 			
-			plugin.loadConfig();
+			plugin.reloadConfig();
 			
-			sender.sendMessage(ChatColor.BLUE + Phrase.NCHAT_CONFIG_RELOADED.parse());
+			sender.sendMessage(Phrase.NCHAT_CONFIG_RELOADED.parse());
 		}
 		return true;
 	}

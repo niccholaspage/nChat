@@ -34,7 +34,7 @@ public class nChatPlayerListener implements Listener {
 		if (command.toLowerCase().startsWith("/me ")){
 			String message = command.substring(command.indexOf(" ")).trim();
 			
-			plugin.getServer().broadcastMessage(plugin.formatMessage(player, plugin.getConfigHandler().getMeFormat(), message));
+			plugin.getServer().broadcastMessage(plugin.formatMessage(player, plugin.getAPI().getMeFormat(), message));
 			
 			event.setCancelled(true);
 		}
@@ -42,23 +42,23 @@ public class nChatPlayerListener implements Listener {
 	
 	@EventHandler(priority = EventPriority.LOWEST)
 	public void onPlayerJoin(PlayerJoinEvent event){
-		event.setJoinMessage(plugin.formatMessage(event.getPlayer(), plugin.getConfigHandler().getJoinMessage(), null));
+		event.setJoinMessage(plugin.formatMessage(event.getPlayer(), plugin.getAPI().getJoinMessage(), event.getJoinMessage()));
 	}
 	
 	@EventHandler(priority = EventPriority.LOWEST)
 	public void onPlayerQuit(PlayerQuitEvent event){
-		event.setQuitMessage(plugin.formatMessage(event.getPlayer(),  plugin.getConfigHandler().getLeaveMessage(), null));
+		event.setQuitMessage(plugin.formatMessage(event.getPlayer(),  plugin.getAPI().getLeaveMessage(), event.getQuitMessage()));
 	}
 	
 	@EventHandler(priority = EventPriority.LOWEST)
 	public void onPlayerKick(PlayerKickEvent event){
-		event.setLeaveMessage(plugin.formatMessage(event.getPlayer(),  plugin.getConfigHandler().getLeaveMessage(), null));
+		event.setLeaveMessage(plugin.formatMessage(event.getPlayer(),  plugin.getAPI().getLeaveMessage(), event.getLeaveMessage()));
 	}
 	
 	@EventHandler(priority = EventPriority.LOWEST)
-	public void onPlayerChat(PlayerChatEvent event) {
+	public void onPlayerChat(PlayerChatEvent event){
 		if (event.getMessage().startsWith("/")) return;
 		
-		event.setFormat(plugin.formatMessage(event.getPlayer(),  plugin.getConfigHandler().getMessageFormat(), event.getMessage()));
+		event.setFormat(plugin.formatMessage(event.getPlayer(), plugin.getAPI().getMessageFormat(), event.getMessage()));
 	}
 }

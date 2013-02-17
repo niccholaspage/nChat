@@ -1,85 +1,79 @@
 package com.niccholaspage.nChat;
 
-import java.io.File;
-import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import net.milkbowl.vault.chat.Chat;
+import net.milkbowl.vault.permission.Permission;
+
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.Plugin;
+import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import com.niccholaspage.nChat.permissions.*;
+import com.niccholaspage.nChat.api.API;
 import com.niccholaspage.nChat.api.ChatFormatEvent;
 import com.niccholaspage.nChat.api.Node;
-import com.niccholaspage.nChat.api.PermissionsHandlerEnabledEvent;
 import com.niccholaspage.nChat.api.PlayerChatFormatEvent;
 import com.niccholaspage.nChat.commands.*;
 
 public class nChat extends JavaPlugin {
-	//Permissions Handler
-	private PermissionsHandler permissionsHandler;
-	//Config Handler
-	private ConfigHandler configHandler;
+	private Permission permission;
+	
+	private Chat chat;
+
+	private API api;
 	
 	public void onEnable(){
 		new nChatPlayerListener(this);
 		
 		new nChatServerListener(this);
 		
-		setupPermissions();
-		
-		getDataFolder().mkdirs();
-		
-		loadConfig();
-		
-		//Register commands
-		getCommand("nchat").setExecutor(new nChatCommand(this));
-	}
-	
-	private void setupPermissions(){
-		PermissionsHandlerEnabledEvent event = new PermissionsHandlerEnabledEvent();
-		
-		getServer().getPluginManager().callEvent(event);
-		
-		if (event.getPermissionsHandler() != null){
-			permissionsHandler = event.getPermissionsHandler();
+		if (!setupPermissions() || !setupChat()){
+			log(Phrase.FAILED_ENABLE);
+			
+			setEnabled(false);
 			
 			return;
 		}
 		
-		Plugin PEX = getServer().getPluginManager().getPlugin("PermissionsEx");
+		getDataFolder().mkdirs();
 		
-		Plugin bPermissions = getServer().getPluginManager().getPlugin("bPermissions");
+		api = new API(this);
 		
-		Plugin groupManager = getServer().getPluginManager().getPlugin("EssentialsGroupManager");
-		
-		if(PEX != null){
-			permissionsHandler = new PermissionsExHandler();
-		}else if (bPermissions != null){
-			permissionsHandler = new bPermissionsHandler();
-		}else if (groupManager != null){
-			permissionsHandler = new GroupManagerHandler(this, groupManager);
-		}else {
-			permissionsHandler = new DinnerPermissionsHandler(this);
-		}
+		getCommand("nchat").setExecutor(new nChatCommand(this));
 	}
 	
-	public void loadConfig(){
-		File configFile = new File(getDataFolder(), "config.yml");
-
-		try {
-			configFile.createNewFile();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		
-		File phrasesFile = new File(getDataFolder(), "phrases.yml");
-		
-		configHandler = new ConfigHandler(configFile, phrasesFile);
-		
-		permissionsHandler.reload();
+	public void log(Phrase phrase, String... args){
+		log(phrase.parse(args));
 	}
+	
+	public void log(String message){
+		getLogger().info("[nChat] " + message);
+	}
+	
+	public API getAPI(){
+		return api;
+	}
+	
+    private boolean setupPermissions(){
+        RegisteredServiceProvider<Permission> permissionProvider = getServer().getServicesManager().getRegistration(Permission.class);
+        
+        if (permissionProvider != null) {
+            permission = permissionProvider.getProvider();
+        }
+        
+        return permission != null;
+    }
+    
+    private boolean setupChat(){
+        RegisteredServiceProvider<Chat> chatProvider = getServer().getServicesManager().getRegistration(Chat.class);
+        
+        if (chatProvider != null){
+        	chat = chatProvider.getProvider();
+        }
+        
+        return chat != null;
+    }
 	
 	public String formatMessage(Player player, String out, String message){
 		if (out == null || out == ""){
@@ -105,16 +99,16 @@ public class nChat extends JavaPlugin {
 
 			world = player.getWorld().getName();
 
-			group = permissionsHandler.getGroup(name, world);
+			group = permission.getPrimaryGroup(world, name);
 
-			prefix = permissionsHandler.getPrefix(name, world);
+			prefix = chat.getPlayerPrefix(world, name);
 
-			suffix = permissionsHandler.getSuffix(name, world);
+			suffix = chat.getPlayerSuffix(world, name);
 		}
 
 		Date now = new Date();
 
-		SimpleDateFormat dateFormat = new SimpleDateFormat(configHandler.getTimestampFormat());
+		SimpleDateFormat dateFormat = new SimpleDateFormat(api.getTimestampFormat());
 
 		String time = dateFormat.format(now);
 
@@ -124,7 +118,6 @@ public class nChat extends JavaPlugin {
 
 		out = replaceSplit(out, old, replacements);
 
-		//API time
 		ChatFormatEvent event;
 
 		if (player != null){
@@ -143,23 +136,9 @@ public class nChat extends JavaPlugin {
 			out = out.replace("+" + node.getName(), node.getValue());
 		}
 
-		if (player != null){
-			if ((permissionsHandler.hasPermission(player, "nChat.colors")) || (permissionsHandler.hasPermission(player, "nChat.colours"))) {
-				out = out.replace(configHandler.getColorCharacter(), "\u00A7");
-			}
-		}
-
 		out = out.replaceAll("%", "%%");
 
 		return out;
-	}
-	
-	public ConfigHandler getConfigHandler(){
-		return configHandler;
-	}
-	
-	public PermissionsHandler getPermissionsHandler(){
-		return permissionsHandler;
 	}
 
 	public String replaceSplit(String str, String[] search, String[] replace){

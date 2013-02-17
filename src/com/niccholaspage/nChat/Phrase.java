@@ -3,7 +3,8 @@ package com.niccholaspage.nChat;
 public enum Phrase {
 	NCHAT_COMMAND_CREDIT("nChat $1 by niccholaspage"),
 	NCHAT_CONFIG_RELOAD_HOW_TO("Type /$1 reload to reload the configuration"),
-	NCHAT_CONFIG_RELOADED("The nChat configuration has been reloaded.");
+	NCHAT_CONFIG_RELOADED("The nChat configuration has been reloaded."),
+	FAILED_ENABLE("Failed to setup permissions and/or chat! Disabling nChat.");
 
 	private String defaultMessage;
 	

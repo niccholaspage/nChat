@@ -1,0 +1,9 @@
+messageformat: [+prefix+group+suffix&f] +name: +message
+
+meformat: * +rname +message
+
+timestampformat: hh:mm:ss
+
+joinmessage: &e+rname has joined the game
+
+leavemessage: &e+rname has left the game
