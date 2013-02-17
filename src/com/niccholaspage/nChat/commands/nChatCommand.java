@@ -22,10 +22,10 @@ public class nChatCommand implements CommandExecutor {
 				return true;
 			}
 			
-			sender.sendMessage(Phrase.NCHAT_COMMAND_CREDIT.parse(plugin.getDescription().getVersion()));
+			Phrase.COMMAND_CREDIT.send(sender, plugin.getDescription().getVersion());
 			
 			if (reloadPermission){
-				sender.sendMessage(Phrase.NCHAT_CONFIG_RELOAD_HOW_TO.parse(cmd.getName()));
+				sender.sendMessage(Phrase.CONFIG_RELOAD_HOW_TO.parse(cmd.getName()));
 			}
 			
 			return true;
@@ -38,7 +38,7 @@ public class nChatCommand implements CommandExecutor {
 			
 			plugin.reloadConfig();
 			
-			sender.sendMessage(Phrase.NCHAT_CONFIG_RELOADED.parse());
+			Phrase.CONFIG_RELOADED.send(sender);
 		}
 		return true;
 	}
