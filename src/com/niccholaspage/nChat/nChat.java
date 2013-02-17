@@ -18,63 +18,67 @@ import com.niccholaspage.nChat.commands.*;
 
 public class nChat extends JavaPlugin {
 	private Permission permission;
-	
+
 	private Chat chat;
 
 	private API api;
-	
+
 	public void onEnable(){
 		new nChatPlayerListener(this);
-		
+
 		new nChatServerListener(this);
-		
+
 		if (!setupPermissions() || !setupChat()){
 			log(Phrase.FAILED_ENABLE);
-			
+
 			setEnabled(false);
-			
+
 			return;
 		}
-		
+
 		getDataFolder().mkdirs();
-		
+
+		getConfig().options().copyDefaults();
+
+		saveConfig();
+
 		api = new API(this);
-		
+
 		getCommand("nchat").setExecutor(new nChatCommand(this));
 	}
-	
+
 	public void log(Phrase phrase, String... args){
 		log(phrase.parse(args));
 	}
-	
+
 	public void log(String message){
 		getLogger().info("[nChat] " + message);
 	}
-	
+
 	public API getAPI(){
 		return api;
 	}
-	
-    private boolean setupPermissions(){
-        RegisteredServiceProvider<Permission> permissionProvider = getServer().getServicesManager().getRegistration(Permission.class);
-        
-        if (permissionProvider != null) {
-            permission = permissionProvider.getProvider();
-        }
-        
-        return permission != null;
-    }
-    
-    private boolean setupChat(){
-        RegisteredServiceProvider<Chat> chatProvider = getServer().getServicesManager().getRegistration(Chat.class);
-        
-        if (chatProvider != null){
-        	chat = chatProvider.getProvider();
-        }
-        
-        return chat != null;
-    }
-	
+
+	private boolean setupPermissions(){
+		RegisteredServiceProvider<Permission> permissionProvider = getServer().getServicesManager().getRegistration(Permission.class);
+
+		if (permissionProvider != null){
+			permission = permissionProvider.getProvider();
+		}
+
+		return permission != null;
+	}
+
+	private boolean setupChat(){
+		RegisteredServiceProvider<Chat> chatProvider = getServer().getServicesManager().getRegistration(Chat.class);
+
+		if (chatProvider != null){
+			chat = chatProvider.getProvider();
+		}
+
+		return chat != null;
+	}
+
 	public String formatMessage(Player player, String out, String message){
 		if (out == null || out == ""){
 			return null;
